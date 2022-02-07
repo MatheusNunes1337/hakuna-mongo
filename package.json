@@ -1,0 +1,27 @@
+{
+  "name": "hakuna",
+  "version": "1.0.0",
+  "description": "hakuna api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "studying",
+    "groups"
+  ],
+  "author": "Matheus Nunes",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "joi": "^14.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.0",
+    "mongoose-paginate-v2": "^1.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

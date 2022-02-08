@@ -1,10 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-//const swaggerUI = require('swagger-ui-express');
-//const routes = require('./routes');
-//const errorHandler = require('./app/middlewares/errorHandler');
+// const swaggerUI = require('swagger-ui-express');
+// const routes = require('./routes');
+// const errorHandler = require('./app/middlewares/errorHandler');
 require('./infra/database');
-//const swaggerDocs = require('./swagger.json');
+// const swaggerDocs = require('./swagger.json');
 
 class App {
   constructor() {

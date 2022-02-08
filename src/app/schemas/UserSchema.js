@@ -26,7 +26,7 @@ const UserSchema = Schema({
     default: 'user.png'
   },
   contributionPoints: {
-    type: number,
+    type: Number,
     default: 0
   },
   groups: [{

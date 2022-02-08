@@ -3,7 +3,7 @@ const cors = require('cors');
 //const swaggerUI = require('swagger-ui-express');
 //const routes = require('./routes');
 //const errorHandler = require('./app/middlewares/errorHandler');
-//require('./infra/database');
+require('./infra/database');
 //const swaggerDocs = require('./swagger.json');
 
 class App {

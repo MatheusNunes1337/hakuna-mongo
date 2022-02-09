@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 // const swaggerUI = require('swagger-ui-express');
 const routes = require('./routes');
-// const errorHandler = require('./app/middlewares/errorHandler');
+const errorHandler = require('./app/middlewares/errorMiddleware');
 require('./infra/database');
 // const swaggerDocs = require('./swagger.json');
 
@@ -11,7 +11,7 @@ class App {
     this.express = express();
     this.middlewares();
     this.routes();
-    // this.errors();
+    this.errors();
   }
 
   middlewares() {
@@ -24,11 +24,9 @@ class App {
     this.express.use(routes);
   }
 
-  /*
   errors() {
     this.express.use(errorHandler);
   }
-  */
 }
 
 module.exports = new App().express;

@@ -18,8 +18,8 @@ class UserService {
     async create(payload) {
         const {username, email} = payload
 
-        await checkDuplicatedUser(username)
-        await checkDuplicatedUser(email)
+        await checkDuplicatedUser({username})
+        await checkDuplicatedUser({email})
 
         return UserRepository.create(payload)
     }

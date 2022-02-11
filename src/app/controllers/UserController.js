@@ -16,6 +16,12 @@ class UserController {
         const response = await UserService.create(req.body)
         return res.status(201).json(response)
     }
+
+    async update(req, res) {
+        const { id } = req.params
+        const response = await UserService.update(id, req.body)
+        return res.status(200).json(response)
+    }
 }
 
 module.exports = new UserController()

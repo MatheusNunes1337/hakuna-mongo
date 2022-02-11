@@ -1,6 +1,7 @@
 const UserRepository = require('../repositories/UserRepository')
 const checkDuplicatedUser = require('../helpers/checkDuplicatedUser')
 const NotFound = require('../errors/NotFound')
+const bcrypt = require('bcryptjs')
 
 class UserService {
     findAll({offset, limit, ...filter}) {
@@ -27,10 +28,16 @@ class UserService {
     async update(id, payload) {
         await this.findById({ id })
 
-        const {username, email} = payload
+        const {username, email } = payload
+        let { password } = payload
 
         if(username) await checkDuplicatedUser({username})
         if(email) await checkDuplicatedUser({email})
+
+        if(password) {
+            password = await bcrypt.hash(password, 10)
+            payload = {...payload, password}
+        }
 
         return UserRepository.update(id, payload) 
     }

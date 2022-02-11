@@ -27,4 +27,4 @@ class GenericRepository {
     }
 }
 
-module.exports = GenericRepository
+module.exports = new GenericRepository()

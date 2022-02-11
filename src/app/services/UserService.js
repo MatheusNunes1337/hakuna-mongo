@@ -1,5 +1,5 @@
 const UserRepository = require('../repositories/UserRepository')
-const checkDuplicatedUser = require('../helpers/CheckDuplicatedUser')
+const checkDuplicatedUser = require('../helpers/checkDuplicatedUser')
 const NotFound = require('../errors/NotFound')
 
 class UserService {
@@ -22,6 +22,15 @@ class UserService {
         await checkDuplicatedUser({email})
 
         return UserRepository.create(payload)
+    }
+
+    async update(id, payload) {
+        const {username, email} = payload
+
+        if(username) await checkDuplicatedUser({username})
+        if(email) await checkDuplicatedUser({email})
+
+        return UserRepository.update(id, payload) 
     }
 }
 

@@ -10,8 +10,12 @@ class UserService {
         return this.userRepo.getAll(filter, offset, limit)
     }
 
-    findById({ id }) {
-        return this.userRepo.getById(id)
+    async findById({ id }) {
+        const user = await this.userRepo.getById(id)
+
+        if(!user) throw new NotFound('User')
+
+        return user
     }
 }
 

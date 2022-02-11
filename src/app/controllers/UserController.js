@@ -11,6 +11,11 @@ class UserController {
         const response = await UserService.findById(req.params)
         return res.status(200).json(response)
     }
+
+    async create(req, res) {
+        const response = await UserService.create(req.body)
+        return res.status(201).json(response)
+    }
 }
 
 module.exports = new UserController()

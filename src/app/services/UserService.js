@@ -9,6 +9,10 @@ class UserService {
     findAll({offset, limit, ...filter}) {
         return this.userRepo.getAll(filter, offset, limit)
     }
+
+    findById({ id }) {
+        return this.userRepo.getById(id)
+    }
 }
 
 module.exports = new UserService()

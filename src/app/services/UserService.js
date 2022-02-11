@@ -2,9 +2,11 @@ const UserRepository = require('../repositories/UserRepository')
 const checkDuplicatedUser = require('../helpers/checkDuplicatedUser')
 const NotFound = require('../errors/NotFound')
 const bcrypt = require('bcryptjs')
+const transformFilterToRegex = require('../utils/transformFilterToRegex')
 
 class UserService {
     findAll({offset, limit, ...filter}) {
+        filter = transformFilterToRegex(filter)
         return UserRepository.getAll(filter, offset, limit)
     }
 

@@ -1,18 +1,14 @@
-const userRepository = require('../repositories/UserRepository')
+const UserRepository = require('../repositories/UserRepository')
+const checkDuplicatedUser = require('../helpers/CheckDuplicatedUser')
 const NotFound = require('../errors/NotFound')
-const Conflict = require('../errors/Conflict')
 
 class UserService {
-    constructor() {
-        this.userRepo = userRepository
-    }
-
     findAll({offset, limit, ...filter}) {
-        return this.userRepo.getAll(filter, offset, limit)
+        return UserRepository.getAll(filter, offset, limit)
     }
 
     async findById({ id }) {
-        const user = await this.userRepo.getById(id)
+        const user = await UserRepository.getById(id)
 
         if(!user) throw new NotFound('User')
 
@@ -20,18 +16,12 @@ class UserService {
     }
 
     async create(payload) {
-        let user
         const {username, email} = payload
-        
-        user = await this.findAll({ username })
-    
-        if(user.docs.length > 0) throw new Conflict('This username is already in use')
 
-        user = await this.findAll({ email })
+        await checkDuplicatedUser(username)
+        await checkDuplicatedUser(email)
 
-        if(user.docs.length > 0) throw new Conflict('This email is already in use')
-
-        return this.userRepo.create(payload)
+        return UserRepository.create(payload)
     }
 }
 

@@ -6,8 +6,8 @@ class UserRepository extends GenericRepository {
         super(UserSchema)
     }
 
-    async getByEmail(email) {
-        return UserSchema.findOne({ email });
+    async getByUsername(username) {
+        return UserSchema.findOne({ username });
     }
 }
 

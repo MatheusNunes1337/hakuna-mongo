@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+require('express-async-errors')
 // const swaggerUI = require('swagger-ui-express');
 const routes = require('./routes');
 const errorHandler = require('./app/middlewares/errorMiddleware');

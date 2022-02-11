@@ -25,12 +25,20 @@ class UserService {
     }
 
     async update(id, payload) {
+        await this.findById({ id })
+
         const {username, email} = payload
 
         if(username) await checkDuplicatedUser({username})
         if(email) await checkDuplicatedUser({email})
 
         return UserRepository.update(id, payload) 
+    }
+
+    async delete(id) {
+        await this.findById({ id })
+
+        return UserRepository.delete(id)
     }
 }
 

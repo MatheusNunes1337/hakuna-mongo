@@ -11,6 +11,11 @@ class GroupController {
         const response = await GroupService.findById(id)
         return res.status(200).json(response)
     }
+
+    async create(req, res) {
+        const response = await GroupService.create(req.body, req.userId)
+        return res.status(201).json(response)
+    }
 }
 
 module.exports = new GroupController()

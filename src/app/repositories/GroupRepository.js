@@ -1,5 +1,6 @@
 const GenericRepository = require("./GenericRepository");
 const GroupSchema = require('../schemas/GroupSchema')
+const UserSchema = require('../schemas/UserSchema')
 
 class GroupRepository extends GenericRepository {
     constructor() {
@@ -15,6 +16,10 @@ class GroupRepository extends GenericRepository {
 
         group.members.push(userId)
         group.mods.push(userId)
+
+        const user = await UserSchema.findById(userId)
+        user.groups.push(group._id)
+        user.save()
 
         return group.save()
     }

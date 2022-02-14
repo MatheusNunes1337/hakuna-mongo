@@ -16,10 +16,6 @@ const GroupSchema = Schema({
     type: String,
     required: true,
   },
-  maxMembers: {
-    type: Number,
-    required: true,
-  },
   topics: [{
     type: String,
     required: true,
@@ -34,6 +30,10 @@ const GroupSchema = Schema({
   favorites: {
     type: Number,
     default: 0,
+  },
+  maxMembers: {
+    type: Number,
+    default: 100
   },
   createdAt: {
     type: Date,
@@ -50,9 +50,11 @@ const GroupSchema = Schema({
 });
 
 GroupSchema.pre('save', async function encryptPass(next) {
-  const encriptedPassword = await bcrypt.hash(this.password, 10);
-  this.password = encriptedPassword;
-  next();
+    if(this.password) {
+      const encriptedPassword = await bcrypt.hash(this.password, 10);
+      this.password = encriptedPassword;
+    }
+    next();
 });
 
 GroupSchema.plugin(mongoosePaginate);

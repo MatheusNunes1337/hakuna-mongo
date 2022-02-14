@@ -6,6 +6,10 @@ class GroupRepository extends GenericRepository {
         super(GroupSchema)
     }
 
+    async getByName(name) {
+        return GroupSchema.findOne({ name })
+    }
+
     async create(payload, userId) {
         const group = await GroupSchema.create(payload)
 

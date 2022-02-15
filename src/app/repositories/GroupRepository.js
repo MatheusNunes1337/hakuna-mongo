@@ -28,6 +28,11 @@ class GroupRepository extends GenericRepository {
         return GroupSchema.findByIdAndUpdate({_id: groupId}, 
             {$push: { members: userId }})
     }
+
+    addModerator(groupId, userId) {
+        return GroupSchema.findByIdAndUpdate({_id: groupId}, 
+            {$push: { mods: userId }})
+    }
 }
 
 module.exports = new GroupRepository()

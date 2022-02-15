@@ -25,7 +25,13 @@ class GroupController {
 
     async join(req, res) {
         const { id } = req.params
-        const response = await GroupService.join(id, req.userId)
+        await GroupService.join(id, req.userId)
+        return res.status(204).end()
+    }
+
+    async addModerator(req, res) {
+        const {id, userId} = req.params
+        await GroupService.addModerator(id, userId)
         return res.status(204).end()
     }
 }

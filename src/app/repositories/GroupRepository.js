@@ -44,6 +44,16 @@ class GroupRepository extends GenericRepository {
             {$pull: { mods: userId }})
     }
 
+    async removeMember(groupId, userId) {
+        await GroupSchema.findByIdAndUpdate({_id: groupId}, 
+            {$pull: { mods: userId, members: userId }})
+        
+        const user = await UserSchema.findById(userId)
+        user.groups.pull(groupId)
+
+        return user.save()
+    }
+
     
 }
 

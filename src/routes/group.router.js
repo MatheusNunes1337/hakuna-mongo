@@ -7,5 +7,6 @@ groupRouter.post('/', GroupController.create)
 groupRouter.patch('/:id', GroupController.update)
 groupRouter.patch('/:id/join', GroupController.join)
 groupRouter.patch('/:id/mods/:userId', GroupController.addModerator)
+groupRouter.delete('/:id/mods/:userId', GroupController.removeModerator)
 
 module.exports = groupRouter

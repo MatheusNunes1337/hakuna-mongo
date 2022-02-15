@@ -40,6 +40,12 @@ class GroupController {
         await GroupService.removeModerator(id, userId)
         return res.status(204).end()
     }
+
+    async removeMember(req, res) {
+        const {id, userId} = req.params
+        await GroupService.removeMember(id, userId)
+        return res.status(204).end()
+    }
 }
 
 module.exports = new GroupController()

@@ -32,8 +32,6 @@ class GroupService {
 
         const group = await this.findById(id)
 
-        if(!group) throw new NotFound('Group')
-
         if(password) {
             payload.password = await bcrypt.hash(password, 10)
         }
@@ -44,6 +42,12 @@ class GroupService {
         }
 
         return GroupRepository.update(id, payload)
+    }
+
+    async join(groupId, userId) {
+        await this.findById(groupId)
+
+        return GroupRepository.join(groupId, userId)
     }
 }
 

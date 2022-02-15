@@ -49,6 +49,13 @@ class GroupService {
 
         return GroupRepository.join(groupId, userId)
     }
+
+    async addModerator(id, userId) {
+        console.log(id)
+        await this.findById(id)
+
+        return GroupRepository.addModerator(id, userId)
+    }
 }
 
 

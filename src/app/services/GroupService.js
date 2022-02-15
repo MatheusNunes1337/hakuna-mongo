@@ -3,6 +3,7 @@ const NotFound = require('../errors/NotFound')
 const GroupRepository = require('../repositories/GroupRepository')
 const transformFilterToRegex = require('../utils/transformFilterToRegex')
 const Conflict = require('../errors/Conflict')
+const BadRequest = require('../errors/BadRequest')
 
 class GroupService {
     findAll({offset, limit, ...filter}) {
@@ -51,10 +52,18 @@ class GroupService {
     }
 
     async addModerator(id, userId) {
-        console.log(id)
         await this.findById(id)
 
         return GroupRepository.addModerator(id, userId)
+    }
+
+    async removeModerator(id, userId) {
+        const group = await this.findById(id)
+        const modIndex = group.mods.indexOf(userId);
+
+        if(modIndex === -1) throw new BadRequest('This user is not a moderator of this group')
+
+        return GroupRepository.removeModerator(id, userId)
     }
 }
 

@@ -24,13 +24,13 @@ class GroupRepository extends GenericRepository {
         return group.save()
     }
 
-    join(groupId, userId) {
+    async join(groupId, userId) {
         await GroupSchema.findByIdAndUpdate({_id: groupId}, 
             {$push: { members: userId }})
 
         const user = await UserSchema.findById(userId)
         user.groups.push(groupId)
-        
+
         return user.save()
     }
 
@@ -38,6 +38,13 @@ class GroupRepository extends GenericRepository {
         return GroupSchema.findByIdAndUpdate({_id: groupId}, 
             {$push: { mods: userId }})
     }
+
+    removeModerator(groupId, userId) {
+        return GroupSchema.findByIdAndUpdate({_id: groupId}, 
+            {$pull: { mods: userId }})
+    }
+
+    
 }
 
 module.exports = new GroupRepository()

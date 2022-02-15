@@ -25,8 +25,13 @@ class GroupRepository extends GenericRepository {
     }
 
     join(groupId, userId) {
-        return GroupSchema.findByIdAndUpdate({_id: groupId}, 
+        await GroupSchema.findByIdAndUpdate({_id: groupId}, 
             {$push: { members: userId }})
+
+        const user = await UserSchema.findById(userId)
+        user.groups.push(groupId)
+        
+        return user.save()
     }
 
     addModerator(groupId, userId) {

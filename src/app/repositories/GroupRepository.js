@@ -23,6 +23,11 @@ class GroupRepository extends GenericRepository {
 
         return group.save()
     }
+
+    join(groupId, userId) {
+        return GroupSchema.findByIdAndUpdate({_id: groupId}, 
+            {$push: { members: userId }})
+    }
 }
 
 module.exports = new GroupRepository()

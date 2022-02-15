@@ -22,6 +22,12 @@ class GroupController {
         const response = await GroupService.update(req.body, id)
         return res.status(200).json(response)
     }
+
+    async join(req, res) {
+        const { id } = req.params
+        const response = await GroupService.join(id, req.userId)
+        return res.status(204).end()
+    }
 }
 
 module.exports = new GroupController()

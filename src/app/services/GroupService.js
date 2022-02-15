@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs')
 const NotFound = require('../errors/NotFound')
 const GroupRepository = require('../repositories/GroupRepository')
 const transformFilterToRegex = require('../utils/transformFilterToRegex')
@@ -24,6 +25,25 @@ class GroupService {
         if(group) throw new Conflict('This group name is already in use')
 
         return GroupRepository.create(payload, userId)
+    }
+
+    async update(payload, id) {
+        const { password, name } = payload
+
+        const group = await this.findById(id)
+
+        if(!group) throw new NotFound('Group')
+
+        if(password) {
+            payload.password = await bcrypt.hash(password, 10)
+        }
+
+        if(name && group.name !== name) {
+            const group = await GroupRepository.getByName(name)
+            if(group) throw new Conflict('This group name is already in use')
+        }
+
+        return GroupRepository.update(id, payload)
     }
 }
 

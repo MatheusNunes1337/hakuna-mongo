@@ -11,6 +11,10 @@ class UserRepository extends GenericRepository {
         return UserSchema.findOne({ username });
     }
 
+    async getByEmail(email) {
+        return UserSchema.findOne({ email });
+    }
+
     async delete(id) {
         const { groups } = await UserSchema.findById(id)
 

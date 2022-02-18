@@ -15,6 +15,13 @@ class UserRepository extends GenericRepository {
         return UserSchema.findOne({ email });
     }
 
+    async redefinePassword(email, password) {
+        return UserSchema.findOneAndUpdate({ email }, 
+            { password }, 
+            { new: true }
+        )
+    }
+
     async delete(id) {
         const { groups } = await UserSchema.findById(id)
 

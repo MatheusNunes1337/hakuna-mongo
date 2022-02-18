@@ -3,8 +3,9 @@ const GroupController = require('../app/controllers/GroupController')
 
 const createGroupValidation = require('../app/validations/group/createGroupSchema')
 const updateGroupValidation = require('../app/validations/group/updateGroupSchema')
+const getAllGroupsValidation = require('../app/validations/group/getAllSchema')
 
-groupRouter.get('/', GroupController.findAll)
+groupRouter.get('/', getAllGroupsValidation, GroupController.findAll)
 groupRouter.get('/:id', GroupController.findById)
 groupRouter.post('/', createGroupValidation, GroupController.create)
 groupRouter.patch('/:id', updateGroupValidation, GroupController.update)

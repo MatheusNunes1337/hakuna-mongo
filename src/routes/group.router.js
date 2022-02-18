@@ -1,9 +1,11 @@
 const groupRouter = require('express').Router()
 const GroupController = require('../app/controllers/GroupController')
 
+const createGroupValidation = require('../app/validations/group/createGroupSchema')
+
 groupRouter.get('/', GroupController.findAll)
 groupRouter.get('/:id', GroupController.findById)
-groupRouter.post('/', GroupController.create)
+groupRouter.post('/', createGroupValidation, GroupController.create)
 groupRouter.patch('/:id', GroupController.update)
 groupRouter.patch('/:id/join', GroupController.join)
 groupRouter.patch('/:id/mods/:userId', GroupController.addModerator)

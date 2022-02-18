@@ -1,7 +1,13 @@
 const transporter = require('../../config/nodemailer')
+const BadRequest = require('../errors/BadRequest')
+const UserRepository = require('../repositories/UserRepository')
 
 class MailService {
-    send({ receiverEmail }) {
+    async send({ receiverEmail }) {
+        const user = await UserRepository.getByEmail(receiverEmail)
+
+        if(!user) throw new BadRequest('It seems there is not any user with this email on database')
+
         return transporter.sendMail({
             from: `"${process.env.MAIL_SENDER_NAME}" ${process.env.MAIL_SENDER_EMAIL}`,
             to: receiverEmail,

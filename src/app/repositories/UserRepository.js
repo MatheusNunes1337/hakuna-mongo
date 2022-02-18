@@ -15,7 +15,7 @@ class UserRepository extends GenericRepository {
         return UserSchema.findOne({ email });
     }
 
-    async redefinePassword(email, password) {
+    async recoverPassword(email, password) {
         return UserSchema.findOneAndUpdate({ email }, 
             { password }, 
             { new: true }

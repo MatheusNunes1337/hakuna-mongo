@@ -24,6 +24,18 @@ class GroupRepository extends GenericRepository {
         return group.save()
     }
 
+    async delete(id) {
+        const { members } = await GroupSchema.findById(id)
+
+        await Promise.all(members.map(async member => {
+            await UserSchema.findByIdAndUpdate({_id: member}, 
+                {$pull: {groups: id}}
+            )
+        }))
+
+        return GroupSchema.findByIdAndDelete(id)
+    }
+
     async join(groupId, userId) {
         await GroupSchema.findByIdAndUpdate({_id: groupId}, 
             {$push: { members: userId }})
@@ -53,7 +65,6 @@ class GroupRepository extends GenericRepository {
 
         return user.save()
     }
-
     
 }
 

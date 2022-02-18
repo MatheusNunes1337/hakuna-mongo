@@ -78,6 +78,11 @@ class GroupService {
 
         return GroupRepository.removeMember(id, userId)
     }
+
+    async delete(id) {
+        await this.findById(id)
+        return GroupRepository.delete(id)
+    }
 }
 
 

@@ -23,6 +23,11 @@ class PostController {
         const response = await PostService.update(req.body, req.params)
         return res.status(200).json(response)
     }
+
+    async delete(req, res) {
+        await PostService.delete(req.params)
+        return res.status(204).end()
+    }
 }
 
 module.exports = new PostController()

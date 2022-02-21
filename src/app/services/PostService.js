@@ -13,7 +13,6 @@ class PostService {
 
     async findById(id, groupId) {
         const post = await PostRepository.getById(id, groupId)
-
         if(!post) throw new NotFound('Post')
 
         return post
@@ -31,6 +30,11 @@ class PostService {
     async update(payload, {id, groupId}) {
         await this.findById(id, groupId)
         return PostRepository.update(id, payload)
+    }
+
+    async delete({ id, groupId }) {
+        await this.findById(id, groupId)
+        return PostRepository.delete(id, groupId)
     }
 }
 

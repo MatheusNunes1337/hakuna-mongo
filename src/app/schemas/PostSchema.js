@@ -8,9 +8,11 @@ const PostSchema = Schema({
   },
   creationDate: {
     type: String,
+    required: true
   },
   creationTime: {
-    type: Number,
+    type: String,
+    required: true
   },
   likes: {
     type: Number,

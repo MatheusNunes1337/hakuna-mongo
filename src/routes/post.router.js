@@ -9,5 +9,6 @@ postRouter.get('/', PostController.findAll)
 postRouter.get('/:id', PostController.findById)
 postRouter.post('/', PostController.create)
 postRouter.patch('/:id', PostController.update)
+postRouter.delete('/:id', PostController.delete)
 
 module.exports = postRouter

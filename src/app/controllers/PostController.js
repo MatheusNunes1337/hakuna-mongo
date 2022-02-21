@@ -11,6 +11,11 @@ class PostController {
         const response = await PostService.findById(id)
         return res.status(200).json(response)
     }
+
+    async create(req, res) {
+        const response = await PostService.create(req.body, req.userId)
+        return res.status(201).json(response)
+    }
 }
 
 module.exports = new PostController()

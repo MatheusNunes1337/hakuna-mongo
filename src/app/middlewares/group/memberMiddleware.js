@@ -8,6 +8,8 @@ const memberMiddleware = async (req, res, next) => {
     const { groupId } = req.params
     
     const group = await GroupRepository.getById(groupId)
+    if(!group) throw new NotFound('Group')
+    
     const havePermission = group.members.includes(userId)
 
     if(!havePermission) throw new Forbidden('You have no permissions to access this resource')

@@ -28,8 +28,8 @@ class PostService {
         return PostRepository.create(payload)
     }
 
-    async update(payload, id) {
-        await this.findById(id)
+    async update(payload, {id, groupId}) {
+        await this.findById(id, groupId)
         return PostRepository.update(id, payload)
     }
 }

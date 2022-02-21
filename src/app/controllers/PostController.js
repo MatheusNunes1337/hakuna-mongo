@@ -20,8 +20,7 @@ class PostController {
     }
 
     async update(req, res) {
-        const { id } = req.params
-        const response = await PostService.update(req.body, id)
+        const response = await PostService.update(req.body, req.params)
         return res.status(200).json(response)
     }
 }

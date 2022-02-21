@@ -1,30 +1,36 @@
 const NotFound = require('../errors/NotFound')
-const GroupService = require('../services/GroupService')
 const PostRepository = require('../repositories/PostRepository')
 const getCurrentDate = require('../utils/getCurrentDate')
 const getCurrentTime = require('../utils/getCurrentTime')
 const transformFilterToRegex = require('../utils/transformFilterToRegex')
 
 class PostService {
-    async findAll({offset, limit, ...filter}) {
+    async findAll({offset, limit, ...filter}, groupId) {
         filter = transformFilterToRegex(filter)
+        filter.group = groupId 
         return PostRepository.getAll(filter, offset, limit)
     }
 
-    async findById(id) {
-        const post = await PostRepository.getById(id)
+    async findById(id, groupId) {
+        const post = await PostRepository.getById(id, groupId)
 
         if(!post) throw new NotFound('Post')
 
         return post
     }
 
-    async create(payload, authorId) {
+    create(payload, groupId, authorId) {
         payload.creationDate = getCurrentDate()
         payload.creationTime = getCurrentTime()
         payload.author = authorId
+        payload.group = groupId
 
         return PostRepository.create(payload)
+    }
+
+    async update(payload, id) {
+        await this.findById(id)
+        return PostRepository.update(id, payload)
     }
 }
 

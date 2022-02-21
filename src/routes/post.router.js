@@ -8,5 +8,6 @@ postRouter.use(memberMiddleware)
 postRouter.get('/', PostController.findAll)
 postRouter.get('/:id', PostController.findById)
 postRouter.post('/', PostController.create)
+postRouter.patch('/:id', PostController.update)
 
 module.exports = postRouter

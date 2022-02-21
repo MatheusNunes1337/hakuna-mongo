@@ -4,5 +4,6 @@ const memberMiddleware = require('../app/middlewares/group/memberMiddleware')
 
 postRouter.use(memberMiddleware)
 postRouter.get('/', PostController.findAll)
+postRouter.get('/:id', PostController.findById)
 
 module.exports = postRouter

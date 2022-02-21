@@ -45,8 +45,13 @@ class GroupService {
         return GroupRepository.update(id, payload)
     }
 
-    async join(groupId, userId) {
-        await this.findById(groupId)
+    async join(groupId, userId, { password }) {
+        const group = await this.findById(groupId)
+
+        if(password) {
+            const isPasswordValid = await bcrypt.compare(password, group.password)
+            if(!isPasswordValid) throw new BadRequest('The password is incorrect')
+        }
 
         return GroupRepository.join(groupId, userId)
     }

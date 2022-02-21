@@ -25,7 +25,7 @@ class PostService {
         payload.author = authorId
         payload.group = groupId
 
-        return PostRepository.create(payload)
+        return PostRepository.create(payload, groupId)
     }
 
     async update(payload, {id, groupId}) {

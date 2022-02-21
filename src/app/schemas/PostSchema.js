@@ -26,6 +26,10 @@ const PostSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
+  group: {
+    type: Schema.Types.ObjectId,
+    ref: 'Group',
+  },
 });
 
 PostSchema.plugin(mongoosePaginate);

@@ -1,4 +1,5 @@
 const Forbidden = require('../../errors/Forbidden');
+const NotFound = require('../../errors/NotFound')
 const GroupRepository = require('../../repositories/GroupRepository');
 const errorSerialize = require('../../serialize/errorSerialize');
 
@@ -16,7 +17,9 @@ const memberMiddleware = async (req, res, next) => {
 
     return next();
   } catch (err) {
-    return res.status(403).json(errorSerialize(err));
+    let statusCode = 403
+    if(err instanceof NotFound) statusCode = 404 
+    return res.status(statusCode).json(errorSerialize(err));
   }
 };
 

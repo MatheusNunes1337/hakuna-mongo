@@ -17,7 +17,9 @@ const modMiddleware = async (req, res, next) => {
 
     return next();
   } catch (err) {
-    return res.status(403).json(errorSerialize(err));
+    let statusCode = 403
+    if(err instanceof NotFound) statusCode = 404 
+    return res.status(statusCode).json(errorSerialize(err));
   }
 };
 

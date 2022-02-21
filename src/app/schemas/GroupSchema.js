@@ -47,6 +47,10 @@ const GroupSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   }],
+  posts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Post',
+  }],
 });
 
 GroupSchema.pre('save', async function encryptPass(next) {

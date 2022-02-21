@@ -19,6 +19,11 @@ class PostRepository extends GenericRepository {
 
         return post
     }
+
+    async delete(_id, group) {
+        await GroupSchema.findByIdAndUpdate(group, {$pull: {posts: _id}})
+        return PostSchema.findOneAndDelete({_id, group})
+    }
 }
 
 module.exports = new PostRepository()

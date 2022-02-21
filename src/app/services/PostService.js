@@ -1,11 +1,12 @@
 const NotFound = require('../errors/NotFound')
+const GroupService = require('../services/GroupService')
 const PostRepository = require('../repositories/PostRepository')
 const getCurrentDate = require('../utils/getCurrentDate')
 const getCurrentTime = require('../utils/getCurrentTime')
 const transformFilterToRegex = require('../utils/transformFilterToRegex')
 
 class PostService {
-    findAll({offset, limit, ...filter}) {
+    async findAll({offset, limit, ...filter}) {
         filter = transformFilterToRegex(filter)
         return PostRepository.getAll(filter, offset, limit)
     }

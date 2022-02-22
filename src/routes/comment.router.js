@@ -9,5 +9,6 @@ commentRouter.get('/', CommentController.findAll)
 commentRouter.get('/:id', CommentController.findById)
 commentRouter.post('/', CommentController.create)
 commentRouter.patch('/:id', CommentController.update)
+commentRouter.delete('/:id', CommentController.delete)
 
 module.exports = commentRouter

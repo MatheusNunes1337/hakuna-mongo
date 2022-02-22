@@ -6,5 +6,6 @@ const objectIdValidation = require('../app/validations/objectIdSchema')
 commentRouter.use(objectIdValidation)
 commentRouter.use(memberMiddleware)
 commentRouter.get('/', CommentController.findAll)
+commentRouter.get('/:id', CommentController.findById)
 
 module.exports = commentRouter

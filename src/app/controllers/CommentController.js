@@ -23,6 +23,11 @@ class CommentController {
         const response = await CommentService.update(req.body, req.params)
         return res.status(200).json(response)
     }
+
+    async delete(req, res) {
+        await CommentService.delete(req.params)
+        return res.status(204).end()
+    }
 }
 
 module.exports = new CommentController()

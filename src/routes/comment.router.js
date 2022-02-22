@@ -7,5 +7,7 @@ commentRouter.use(objectIdValidation)
 commentRouter.use(memberMiddleware)
 commentRouter.get('/', CommentController.findAll)
 commentRouter.get('/:id', CommentController.findById)
+commentRouter.post('/', CommentController.create)
+commentRouter.patch('/:id', CommentController.update)
 
 module.exports = commentRouter

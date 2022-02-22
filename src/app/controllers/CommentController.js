@@ -8,7 +8,19 @@ class CommentController {
     }
 
     async findById(req, res) {
-        const response = await CommentService.findById(req.params)
+        const {postId, id} = req.params
+        const response = await CommentService.findById(postId, id)
+        return res.status(200).json(response)
+    }
+
+    async create(req, res) {
+        const { postId } = req.params
+        const response = await CommentService.create(req.body, postId, req.userId)
+        return res.status(201).json(response)
+    }
+
+    async update(req, res) {
+        const response = await CommentService.update(req.body, req.params)
         return res.status(200).json(response)
     }
 }

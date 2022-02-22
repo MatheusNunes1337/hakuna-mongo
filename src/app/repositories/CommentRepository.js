@@ -9,6 +9,10 @@ class CommentRepository extends GenericRepository {
     async getAll(postId) {
         return await CommentSchema.find({post: postId})
     }
+
+    async getById(_id, post) {
+        return await CommentSchema.findOne({_id, post})
+    }
 }
 
 module.exports = new CommentRepository()

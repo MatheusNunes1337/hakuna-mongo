@@ -28,6 +28,11 @@ class CommentService {
         await this.findById(postId, id)
         return CommentRepository.update(id, payload)
     }
+
+    async delete({ id, postId }) {
+        await this.findById(postId, id)
+        return CommentRepository.delete(id, postId)
+    }
 }
 
 module.exports = new CommentService()

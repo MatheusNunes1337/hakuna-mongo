@@ -6,6 +6,11 @@ class CommentController {
         const response = await CommentService.getAll(postId)
         return res.status(200).json(response)
     }
+
+    async findById(req, res) {
+        const response = await CommentService.findById(req.params)
+        return res.status(200).json(response)
+    }
 }
 
 module.exports = new CommentController()

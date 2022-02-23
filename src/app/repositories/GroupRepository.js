@@ -14,6 +14,13 @@ class GroupRepository extends GenericRepository {
         return GroupSchema.paginate(filter, { offset, limit, populate: ['members', 'mods', 'posts']})
     }
 
+    async getById(id) {
+        return GroupSchema.findById(id)
+        .populate('members')
+        .populate('mods')
+        .populate('posts')
+    }
+
     async getByName(name) {
         return GroupSchema.findOne({ name })
         .populate('members')

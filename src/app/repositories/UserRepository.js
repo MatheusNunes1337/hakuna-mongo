@@ -14,6 +14,10 @@ class UserRepository extends GenericRepository {
         return UserSchema.paginate(filter, { offset, limit, populate: ['groups']})
     }
 
+    async getById(id) {
+        return UserSchema.findById(id).populate('groups');
+    }
+
     async getByUsername(username) {
         return UserSchema.findOne({ username }).populate('groups');
     }

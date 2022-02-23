@@ -7,12 +7,19 @@ class UserRepository extends GenericRepository {
         super(UserSchema)
     }
 
+    async getAll(filter, offset = 0, limit = 100) {
+        Number(limit);
+        Number(offset);
+    
+        return UserSchema.paginate(filter, { offset, limit, populate: ['groups']})
+    }
+
     async getByUsername(username) {
-        return UserSchema.findOne({ username });
+        return UserSchema.findOne({ username }).populate('groups');
     }
 
     async getByEmail(email) {
-        return UserSchema.findOne({ email });
+        return UserSchema.findOne({ email }).populate('groups');
     }
 
     async recoverPassword(email, password) {

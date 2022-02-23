@@ -1,4 +1,4 @@
-const serialize = ({ _id, content, creationDate, creationTime, likes, deslikes, author, group }) => ({
+const serialize = ({ _id, content, creationDate, creationTime, likes, deslikes, author, comments, group }) => ({
     _id, 
     content, 
     creationDate, 
@@ -6,6 +6,7 @@ const serialize = ({ _id, content, creationDate, creationTime, likes, deslikes, 
     likes, 
     deslikes, 
     author, 
+    comments,
     group
   });
   

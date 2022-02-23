@@ -7,8 +7,15 @@ class PostRepository extends GenericRepository {
         super(PostSchema)
     }
 
+    async getAll(filter, offset = 0, limit = 100) {
+        Number(limit);
+        Number(offset);
+    
+        return PostSchema.paginate(filter, { offset, limit, populate: ['author']})
+    }
+
     getById(_id, group) {
-        return PostSchema.findOne({_id, group})
+        return PostSchema.findOne({_id, group}).populate('author')
     }
 
     async create(payload, groupId) {

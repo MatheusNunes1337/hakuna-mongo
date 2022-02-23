@@ -7,7 +7,7 @@ const transformFilterToRegex = require('../utils/transformFilterToRegex')
 class PostService {
     async findAll({offset, limit, ...filter}, groupId) {
         filter = transformFilterToRegex(filter)
-        filter.group = groupId 
+        filter.group = groupId
         return PostRepository.getAll(filter, offset, limit)
     }
 

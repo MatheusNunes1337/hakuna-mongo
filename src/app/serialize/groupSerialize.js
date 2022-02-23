@@ -1,4 +1,4 @@
-const serialize = ({ _id, name, description, discipline, topics, isPublic, password, favorites, maxMembers, createdAt, members, posts}) => ({
+const serialize = ({ _id, name, description, discipline, topics, isPublic, password, favorites, maxMembers, createdAt, members, mods, posts}) => ({
     _id, 
     name, 
     description, 
@@ -10,6 +10,7 @@ const serialize = ({ _id, name, description, discipline, topics, isPublic, passw
     maxMembers,
     createdAt,
     members,
+    mods,
     posts
   });
   

@@ -7,8 +7,18 @@ class GroupRepository extends GenericRepository {
         super(GroupSchema)
     }
 
+    async getAll(filter, offset = 0, limit = 100) {
+        Number(limit);
+        Number(offset);
+    
+        return GroupSchema.paginate(filter, { offset, limit, populate: ['members', 'mods', 'posts']})
+    }
+
     async getByName(name) {
         return GroupSchema.findOne({ name })
+        .populate('members')
+        .populate('mods')
+        .populate('posts')
     }
 
     async create(payload, userId) {

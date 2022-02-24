@@ -11,7 +11,7 @@ const modMiddleware = async (req, res, next) => {
     const group = await GroupRepository.getById(id)
     if(!group) throw new NotFound('Group')
     
-    const havePermission = group.mods.includes(userId)
+    const havePermission = group.mods.find(mod => mod._id == userId)
 
     if(!havePermission) throw new Forbidden('You have no permissions to access this resource')
 

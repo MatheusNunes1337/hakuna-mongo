@@ -8,11 +8,11 @@ class CommentRepository extends GenericRepository {
     }
 
     async getAll(postId) {
-        return await CommentSchema.find({post: postId})
+        return await CommentSchema.find({post: postId}).populate('author')
     }
 
     async getById(_id, post) {
-        return await CommentSchema.findOne({_id, post})
+        return await CommentSchema.findOne({_id, post}).populate('author')
     }
 
     async create(payload, postId) {

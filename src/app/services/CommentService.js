@@ -25,7 +25,27 @@ class CommentService {
     }
 
     async update(payload, {id, postId}) {
-        await this.findById(postId, id)
+        const { author } = await this.findById(postId, id)
+        const { likes, deslikes } = payload
+
+        if(likes) {
+            if(likes === 'enable') {
+                await increaseContributionPoints(author._id)
+                payload = {$inc : {likes : 1}}
+            } else {
+                await decreaseContributionPoints(author._id)
+                payload = {$inc : {likes : -1}}
+            }
+        } else if(deslikes) {
+            if(deslikes === 'enable') {
+                await decreaseContributionPoints(author._id)
+                payload = {$inc : {deslikes : 1}}
+            } else {
+                await increaseContributionPoints(author._id)
+                payload = {$inc : {deslikes : -1}}
+            } 
+        }
+
         return CommentRepository.update(id, payload)
     }
 

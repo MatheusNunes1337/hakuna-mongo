@@ -1,4 +1,6 @@
 const NotFound = require('../errors/NotFound')
+const decreaseContributionPoints = require('../helpers/decreaseContributionPoints')
+const increaseContributionPoints = require('../helpers/increaseContributionPoints')
 const PostRepository = require('../repositories/PostRepository')
 const getCurrentDate = require('../utils/getCurrentDate')
 const getCurrentTime = require('../utils/getCurrentTime')
@@ -28,7 +30,27 @@ class PostService {
     }
 
     async update(payload, {id, groupId}) {
-        await this.findById(id, groupId)
+        const { author } = await this.findById(id, groupId)
+        const { likes, deslikes } = payload
+
+        if(likes) {
+            if(likes === 'enable') {
+                await increaseContributionPoints(author._id)
+                payload = {$inc : {likes : 1}}
+            } else {
+                await decreaseContributionPoints(author._id)
+                payload = {$inc : {likes : -1}}
+            }
+        } else if(deslikes) {
+            if(deslikes === 'enable') {
+                await decreaseContributionPoints(author._id)
+                payload = {$inc : {deslikes : 1}}
+            } else {
+                await increaseContributionPoints(author._id)
+                payload = {$inc : {deslikes : -1}}
+            } 
+        }
+
         return PostRepository.update(id, payload)
     }
 

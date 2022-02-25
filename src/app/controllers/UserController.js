@@ -19,6 +19,10 @@ class UserController {
 
     async update(req, res) {
         const { id } = req.params
+        if(req.file) {
+            const { key } = req.file
+            req.body.profilePic = key
+        }
         const response = await UserService.update(id, req.body)
         return res.status(200).json(serialize(response))
     }

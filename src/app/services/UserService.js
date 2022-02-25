@@ -18,6 +18,10 @@ class UserService {
         return user
     }
 
+    getRanking() {
+        return UserRepository.getRanking()
+    }
+
     async create(payload) {
         const {username, email} = payload
 

@@ -7,6 +7,7 @@ const postRouter = require('../routes/post.router')
 const commentRouter = require('../routes/comment.router')
 
 const authentication = require('../app/middlewares/authenticationMiddleware');
+const rankingRouter = require("./ranking.router");
 
 const routes = express.Router({mergeParams: true})
 
@@ -18,5 +19,6 @@ routes.use(authentication)
 routes.use('/api/v1/groups', groupRouter)
 routes.use('/api/v1/groups/:groupId/posts', postRouter)
 routes.use('/api/v1/groups/:groupId/posts/:postId/comments/', commentRouter)
+routes.use('/api/v1/ranking', rankingRouter)
 
 module.exports = routes

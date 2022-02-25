@@ -7,6 +7,11 @@ class UserController {
         return res.status(200).json(paginateSerialize(response))
     }
 
+    async getRanking(req, res) {
+        const response = await UserService.getRanking()
+        return res.status(200).json({users: response})
+    }
+
     async findById(req, res) {
         const response = await UserService.findById(req.params)
         return res.status(200).json(serialize(response))
@@ -19,6 +24,7 @@ class UserController {
 
     async update(req, res) {
         const { id } = req.params
+
         if(req.file) {
             const { key } = req.file
             req.body.profilePic = key

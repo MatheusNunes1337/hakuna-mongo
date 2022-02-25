@@ -18,6 +18,10 @@ class UserRepository extends GenericRepository {
         return UserSchema.findById(id).populate('groups');
     }
 
+    async getRanking() {
+        return UserSchema.find().sort({ contributionPoints: -1 }).limit(5);
+    }
+
     async getByUsername(username) {
         return UserSchema.findOne({ username }).populate('groups');
     }

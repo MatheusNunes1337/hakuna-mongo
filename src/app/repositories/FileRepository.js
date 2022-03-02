@@ -13,6 +13,16 @@ class FileRepository {
         })
         .promise()
     }
+
+    async download(key) {
+        const file = await s3.getObject({
+            Bucket: BUCKET,
+            Key: key
+        })
+        .promise()
+
+        return file.Body
+    }
 }
 
 module.exports = new FileRepository()

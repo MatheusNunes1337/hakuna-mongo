@@ -1,7 +1,7 @@
 const userRouter = require('express').Router()
 const UserController = require('../app/controllers/UserController')
 const authentication = require('../app/middlewares/authenticationMiddleware')
-const imageUpload = require('../config/multer/imageUpload')
+const { imageUpload } = require('../config/multer/fileUpload')
 
 const createUserValidation = require('../app/validations/user/createUserSchema')
 const getAllUsersValidation = require('../app/validations/user/getAllSchema')

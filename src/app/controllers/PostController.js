@@ -16,7 +16,7 @@ class PostController {
 
     async create(req, res) {
         const { groupId } = req.params
-        const response = await PostService.create(req.body, groupId, req.userId)
+        const response = await PostService.create(req.body, groupId, req.userId, req.files)
         return res.status(201).json(serialize(response))
     }
 

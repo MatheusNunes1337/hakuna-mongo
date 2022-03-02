@@ -20,11 +20,16 @@ class PostService {
         return post
     }
 
-    create(payload, groupId, authorId) {
+    async create(payload, groupId, authorId, files) {
         payload.creationDate = getCurrentDate()
         payload.creationTime = getCurrentTime()
         payload.author = authorId
         payload.group = groupId
+
+        if(files) {
+            const materials = files.map(file => file.filename)
+            payload.files = materials
+        }
 
         return PostRepository.create(payload, groupId)
     }

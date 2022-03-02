@@ -3,6 +3,7 @@ const checkDuplicatedUser = require('../helpers/checkDuplicatedUser')
 const NotFound = require('../errors/NotFound')
 const bcrypt = require('bcryptjs')
 const transformFilterToRegex = require('../utils/transformFilterToRegex')
+const FileRepository = require('../repositories/FileRepository')
 
 class UserService {
     findAll({offset, limit, ...filter}) {
@@ -31,8 +32,8 @@ class UserService {
         return UserRepository.create(payload)
     }
 
-    async update(id, payload) {
-        await this.findById({ id })
+    async update(id, payload, file) {
+        const user = await this.findById({ id })
 
         const {username, email } = payload
         let { password } = payload
@@ -45,12 +46,22 @@ class UserService {
             payload = {...payload, password}
         }
 
+        if(file) {
+            const { key } = file
+            payload.profilePic = key
+
+            if(user.profilePic !== 'user.png') 
+                await FileRepository.delete(user.profilePic)
+        }
+
         return UserRepository.update(id, payload) 
     }
 
     async delete(id) {
-        await this.findById({ id })
-
+        const { profilePic } = await this.findById({ id })
+        if(profilePic !== 'user.png') 
+            await FileRepository.delete(profilePic)
+        
         return UserRepository.delete(id)
     }
 }

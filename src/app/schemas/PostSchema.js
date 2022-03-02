@@ -26,6 +26,9 @@ const PostSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
+  files: [{
+    type: String
+  }],
   comments: [{
     type: Schema.Types.ObjectId,
     ref: 'Comment',

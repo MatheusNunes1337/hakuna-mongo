@@ -14,6 +14,16 @@ class FileRepository {
         .promise()
     }
 
+    async deleteMany(keys = []) {
+        const objects = keys.map(key => ({ Key: key }));
+
+        return await s3.deleteObjects({
+            Bucket: BUCKET,
+            Delete: { Objects: objects }
+        })
+        .promise()
+    }
+
     async download(key) {
         const file = await s3.getObject({
             Bucket: BUCKET,

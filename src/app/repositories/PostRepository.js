@@ -11,11 +11,11 @@ class PostRepository extends GenericRepository {
         Number(limit);
         Number(offset);
     
-        return PostSchema.paginate(filter, { offset, limit, populate: ['author']})
+        return PostSchema.paginate(filter, { offset, limit, populate: ['author', 'comments']})
     }
 
     getById(_id, group) {
-        return PostSchema.findOne({_id, group}).populate('author')
+        return PostSchema.findOne({_id, group}).populate('author').populate('comments')
     }
 
     async create(payload, groupId) {

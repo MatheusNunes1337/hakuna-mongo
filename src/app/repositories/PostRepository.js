@@ -1,6 +1,7 @@
 const GenericRepository = require("./GenericRepository");
 const PostSchema = require('../schemas/PostSchema')
 const GroupSchema = require('../schemas/GroupSchema')
+const CommentSchema = require('../schemas/CommentSchema')
 
 class PostRepository extends GenericRepository {
     constructor() {
@@ -29,6 +30,7 @@ class PostRepository extends GenericRepository {
 
     async delete(_id, group) {
         await GroupSchema.findByIdAndUpdate(group, {$pull: {posts: _id}})
+        await CommentSchema.deleteMany({post: _id})
         return PostSchema.findOneAndDelete({_id, group})
     }
 }

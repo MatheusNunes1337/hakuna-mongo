@@ -15,11 +15,16 @@ class CommentService {
         return comment
     }
 
-    async create(payload, postId, authorId) {
+    async create(payload, postId, authorId, files) {
         payload.creationDate = getCurrentDate()
         payload.creationTime = getCurrentTime()
         payload.author = authorId
         payload.post = postId
+
+        if(files) {
+            const materials = files.map(file => file.filename)
+            payload.files = materials
+        }
 
         return CommentRepository.create(payload, postId)
     }

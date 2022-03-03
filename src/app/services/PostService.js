@@ -1,6 +1,8 @@
+const BadRequest = require('../errors/BadRequest')
 const NotFound = require('../errors/NotFound')
 const decreaseContributionPoints = require('../helpers/decreaseContributionPoints')
 const increaseContributionPoints = require('../helpers/increaseContributionPoints')
+const FileRepository = require('../repositories/FileRepository')
 const PostRepository = require('../repositories/PostRepository')
 const getCurrentDate = require('../utils/getCurrentDate')
 const getCurrentTime = require('../utils/getCurrentTime')
@@ -34,8 +36,8 @@ class PostService {
         return PostRepository.create(payload, groupId)
     }
 
-    async update(payload, {id, groupId}) {
-        const { author } = await this.findById(id, groupId)
+    async update(payload, {id, groupId}, materials) {
+        const { author, files } = await this.findById(id, groupId)
         const { likes, deslikes } = payload
 
         if(likes) {
@@ -56,11 +58,22 @@ class PostService {
             } 
         }
 
+        if(materials) {
+            if(materials.length + files.length > 3) 
+                throw new BadRequest('A post cannot have more than 3 files')
+
+            const postFiles = materials.map(file => file.filename)
+            payload.files = postFiles
+        }
+
         return PostRepository.update(id, payload)
     }
 
     async delete({ id, groupId }) {
-        await this.findById(id, groupId)
+        const { files, comments } = await this.findById(id, groupId)
+        const allFiles = comments.map(comment => files.push(...comment.files))
+        await FileRepository.deleteMany(allFiles)
+        
         return PostRepository.delete(id, groupId)
     }
 }

@@ -1,5 +1,6 @@
 const NotFound = require('../errors/NotFound')
 const CommentRepository = require('../repositories/CommentRepository')
+const FileRepository = require('../repositories/FileRepository')
 const getCurrentDate = require('../utils/getCurrentDate')
 const getCurrentTime = require('../utils/getCurrentTime')
 
@@ -55,7 +56,8 @@ class CommentService {
     }
 
     async delete({ id, postId }) {
-        await this.findById(postId, id)
+        const { files } = await this.findById(postId, id)
+        await FileRepository.deleteMany(allFiles)
         return CommentRepository.delete(id, postId)
     }
 }

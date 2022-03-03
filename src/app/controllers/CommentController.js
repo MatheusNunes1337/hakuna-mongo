@@ -16,7 +16,7 @@ class CommentController {
 
     async create(req, res) {
         const { postId } = req.params
-        const response = await CommentService.create(req.body, postId, req.userId)
+        const response = await CommentService.create(req.body, postId, req.userId, req.files)
         return res.status(201).json(serialize(response))
     }
 

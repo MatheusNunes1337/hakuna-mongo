@@ -30,8 +30,8 @@ class CommentService {
         return CommentRepository.create(payload, postId)
     }
 
-    async update(payload, {id, postId}) {
-        const { author } = await this.findById(postId, id)
+    async update(payload, {id, postId}, materials) {
+        const { author, files } = await this.findById(postId, id)
         const { likes, deslikes } = payload
 
         if(likes) {
@@ -52,12 +52,20 @@ class CommentService {
             } 
         }
 
+        if(materials) {
+            if(materials.length + files.length > 3) 
+                throw new BadRequest('A comment cannot have more than 3 files')
+
+            const commentFiles = materials.map(file => file.filename)
+            payload.files = commentFiles
+        }
+
         return CommentRepository.update(id, payload)
     }
 
     async delete({ id, postId }) {
         const { files } = await this.findById(postId, id)
-        await FileRepository.deleteMany(allFiles)
+        await FileRepository.deleteMany(files)
         return CommentRepository.delete(id, postId)
     }
 }

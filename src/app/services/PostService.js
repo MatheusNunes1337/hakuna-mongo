@@ -37,7 +37,7 @@ class PostService {
     }
 
     async update(payload, {id, groupId}, materials) {
-        const { author } = await this.findById(id, groupId)
+        const { author, files } = await this.findById(id, groupId)
         const { likes, deslikes } = payload
   
         if(likes) {
@@ -62,8 +62,8 @@ class PostService {
             if(materials.length + files.length > 3) 
                 throw new BadRequest('A post cannot have more than 3 files')
 
-            const postFiles = materials.map(file => file.filename)
-            payload.files = postFiles
+            const postFiles = materials.map(file => file.key)
+            payload.files = files.concat(postFiles)
         }
 
         return PostRepository.update(id, payload)

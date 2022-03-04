@@ -12,7 +12,7 @@ postRouter.use(memberMiddleware)
 postRouter.get('/', getAllPostsValidation, PostController.findAll)
 postRouter.get('/:id', PostController.findById)
 postRouter.post('/', fileUpload.array('files', 3), PostController.create)
-postRouter.patch('/:id', PostController.update)
+postRouter.patch('/:id', fileUpload.array('files', 3), PostController.update)
 postRouter.delete('/:id', PostController.delete)
 
 module.exports = postRouter

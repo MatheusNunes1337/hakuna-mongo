@@ -7,6 +7,12 @@ const BadRequest = require('../../app/errors/BadRequest')
 
 dotenv.config()
 
+aws.config.update({
+    region: process.env.AWS_DEFAULT_REGION,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+})
+
 const fileStorageLocal = multer.diskStorage({    
     destination: function (req, file, cb) {
         cb(null, path.resolve(__dirname, '..', '..', 'tmp', 'uploads'))
@@ -43,7 +49,7 @@ const imageUpload = multer({
 })
 
 const fileUpload = multer({
-    storage: fileStorageLocal,
+    storage: fileStorageS3,
     limits: {
       fileSize: 3000000 
     },

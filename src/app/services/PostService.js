@@ -29,7 +29,7 @@ class PostService {
         payload.group = groupId
 
         if(files) {
-            const materials = files.map(file => file.filename)
+            const materials = files.map(file => file.key)
             payload.files = materials
         }
 
@@ -37,9 +37,9 @@ class PostService {
     }
 
     async update(payload, {id, groupId}, materials) {
-        const { author, files } = await this.findById(id, groupId)
+        const { author } = await this.findById(id, groupId)
         const { likes, deslikes } = payload
-
+  
         if(likes) {
             if(likes === 'enable') {
                 await increaseContributionPoints(author._id)
@@ -71,9 +71,10 @@ class PostService {
 
     async delete({ id, groupId }) {
         const { files, comments } = await this.findById(id, groupId)
-        const allFiles = comments.map(comment => files.push(...comment.files))
+        const commentFiles = comments.map(comment => comment.files)
+        const allFiles = [files, ...commentFiles].flat()
         await FileRepository.deleteMany(allFiles)
-        
+
         return PostRepository.delete(id, groupId)
     }
 }

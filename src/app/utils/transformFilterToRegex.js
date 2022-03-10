@@ -7,5 +7,5 @@ const transformFilterToRegex = (filter) => {
     return filter;
 };
 
-module.exports = transformFilterToRegex
+module.exports = transformFilterToRegex;
   

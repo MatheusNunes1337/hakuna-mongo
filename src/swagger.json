@@ -169,6 +169,16 @@
                           }
                         }
                     },
+                    "401": {
+                        "description": "Error status 401 - Unauthorized",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/Errors"
+                            }
+                          }
+                        }
+                    },
                     "404": {
                         "description": "User not found",
                         "content": {
@@ -185,6 +195,15 @@
                 "summary": "Update a user",
                 "description": "At this endpoint, you can update a user",
                 "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                          "schema": {
+                            "$ref": "#/components/schemas/UserRequest"
+                          }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -198,6 +217,16 @@
                     },
                     "400": {
                         "description": "Error status 400",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/Errors"
+                            }
+                          }
+                        }
+                    },
+                    "401": {
+                        "description": "Error status 401 - Unauthorized",
                         "content": {
                           "application/json": {
                             "schema": {
@@ -228,6 +257,16 @@
                     },
                     "400": {
                         "description": "Invalid id format",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/Errors"
+                            }
+                          }
+                        }
+                    },
+                    "401": {
+                        "description": "Error status 401 - Unauthorized",
                         "content": {
                           "application/json": {
                             "schema": {
@@ -293,6 +332,289 @@
                     }
                 }
             }  
+        },
+        "/api/v1/groups": {
+            "get": {
+                "summary": "Get all groups",
+                "description": "At this endpoint you can get all groups",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "offset",
+                        "schema": {
+                          "type": "integer"
+                        },
+                        "description": "The number of users to skip before starting to collect the result set",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "The numbers of users to return",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "name",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The group name"
+                    },
+                    {
+                        "in": "query",
+                        "name": "isPublic",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "The group type"
+                    },
+                    {
+                        "in": "query",
+                        "name": "topics",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "A topic of the group"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/Groups"
+                            }
+                          }
+                        }
+                    },
+                    "400": {
+                        "description": "Error status 400",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/Errors"
+                            }
+                          }
+                        }
+                    },
+                    "401": {
+                        "description": "Error status 401 - Unauthorized",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/Errors"
+                            }
+                          }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new group",
+                "description": "At this endpoint, you can create a new group",
+                "requestBody": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/GroupRequest"
+                        }
+                      }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/GroupResponse"
+                            }
+                          }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request error",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/Errors"
+                            }
+                          }
+                        }
+                    },
+                    "401": {
+                        "description": "Error status 401 - Unauthorized",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/Errors"
+                            }
+                          }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/groups/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "required": true
+                }
+            ],
+            "get": {
+                "summary": "Get a group by id",
+                "description": "At this endpoint you can get a group by its id",
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GroupResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error status 400",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/Errors"
+                            }
+                          }
+                        }
+                    },
+                    "401": {
+                        "description": "Error status 401 - Unauthorized",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/Errors"
+                            }
+                          }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/Errors"
+                            }
+                          }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Update a group",
+                "description": "At this endpoint, you can update a group",
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                          "schema": {
+                            "$ref": "#/components/schemas/GroupRequest"
+                          }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GroupResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error status 400",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/Errors"
+                            }
+                          }
+                        }
+                    },
+                    "401": {
+                        "description": "Error status 401 - Unauthorized",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/Errors"
+                            }
+                          }
+                        }
+                    },
+                    "404": {
+                        "description": "Group not found",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/Errors"
+                            }
+                          }
+                        }
+                    } 
+                }
+            },
+            "delete": {
+                "summary": "Delete a group",
+                "description": "At this endpoint, you can delete a group",
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "204": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Invalid id format",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/Errors"
+                            }
+                          }
+                        }
+                    },
+                    "401": {
+                        "description": "Error status 401 - Unauthorized",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/Errors"
+                            }
+                          }
+                        }
+                    },
+                    "404": {
+                        "description": "Group not found",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/Errors"
+                            }
+                          }
+                        }
+                    }
+                } 
+            }
         }
         
     },
@@ -333,10 +655,8 @@
             },
             "UserRequest": {
                 "type": "object",
+                "required": ["username", "email", "password", "type"],
                 "properties": {
-                    "_id": {
-                        "type": "string"
-                    },
                     "username": {
                         "type": "string"
                     },
@@ -352,6 +672,9 @@
                             "student",
                             "teacher"
                         ]
+                    },
+                    "area": {
+                        "type": "string"
                     }
                 }
             },
@@ -372,6 +695,93 @@
                     }
                 }
             },
+            "GroupResponse": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "discipline": {
+                        "type": "string"
+                    },
+                    "topics": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "minItems": 1,
+                            "maxItems": 3
+                        }
+                    },
+                    "isPublic": {
+                        "type": "boolean"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "favorites": {
+                        "type": "number"
+                    },
+                    "maxMembers": {
+                        "type": "number"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "members": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserResponse"
+                        }
+                    },
+                    "mods": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserResponse"
+                        }
+                    }
+                }
+            },
+            "GroupRequest": {
+                "type": "object",
+                "required": ["name", "description", "discipline", "topics", "isPublic"],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "discipline": {
+                        "type": "string"
+                    },
+                    "topics": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "minItems": 1,
+                            "maxItems": 3
+                        }
+                    },
+                    "isPublic": {
+                        "type": "boolean"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Groups": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/GroupResponse"
+                }
+            },
             "Error": {
                 "type": "object",
                 "properties": {
@@ -382,7 +792,8 @@
                         "type": "string"
                     }
                 }
-            },  
+            },
+
             "Errors": {
                 "type": "array",
                 "items": {

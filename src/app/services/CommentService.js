@@ -23,7 +23,7 @@ class CommentService {
         payload.post = postId
 
         if(files) {
-            const materials = files.map(file => file.filename)
+            const materials = files.map(file => file.key)
             payload.files = materials
         }
 
@@ -56,7 +56,7 @@ class CommentService {
             if(materials.length + files.length > 3) 
                 throw new BadRequest('A comment cannot have more than 3 files')
 
-            const commentFiles = materials.map(file => file.filename)
+            const commentFiles = materials.map(file => file.key)
             payload.files = commentFiles
         }
 

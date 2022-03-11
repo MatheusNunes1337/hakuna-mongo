@@ -927,24 +927,6 @@
             "parameters": [
               {
                 "in": "query",
-                "name": "offset",
-                "schema": {
-                  "type": "integer"
-                },
-                "description": "The number of comments to skip before starting to collect the result set",
-                "required": false
-              },
-              {
-                "in": "query",
-                "name": "limit",
-                "schema": {
-                    "type": "integer"
-                },
-                "description": "The numbers of comments to return",
-                "required": false
-              },
-              {
-                "in": "query",
                 "name": "content",
                 "schema": {
                     "type": "string"
@@ -1201,8 +1183,37 @@
                 }
             }
           }
+        },
+        "/api/v1/ranking": {
+          "get": {
+            "summary": "Get the users's ranking",
+            "description": "At this endpoint you can get the ranking based on contribution points",
+            "security": [{ "bearerAuth": [] }],
+            "responses": {
+              "200": {
+                  "description": "Success",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/Users"
+                      }
+                    }
+                  }
+              },
+              "401": {
+                  "description": "Error status 401 - Unauthorized",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/Errors"
+                      }
+                    }
+                  }
+              }
+            } 
+          }
         }
-    
+        
     },
     "components": {
         "schemas": {

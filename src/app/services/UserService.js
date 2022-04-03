@@ -1,5 +1,5 @@
 const UserRepository = require('../repositories/UserRepository')
-const checkDuplicatedUser = require('../helpers/checkDuplicatedUser')
+const checkDuplicatedUser = require('../helpers/CheckDuplicatedUser')
 const NotFound = require('../errors/NotFound')
 const bcrypt = require('bcryptjs')
 const transformFilterToRegex = require('../utils/transformFilterToRegex')

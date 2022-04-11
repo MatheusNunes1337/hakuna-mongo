@@ -38,8 +38,13 @@ class UserService {
         const {username, email } = payload
         let { password } = payload
 
-        if(username) await checkDuplicatedUser({username})
-        if(email) await checkDuplicatedUser({email})
+        if(username && username !== user.username) {
+            await checkDuplicatedUser({username})
+        }
+        
+        if(email && email !== user.email) {
+            await checkDuplicatedUser({email})
+        }
 
         if(password) {
             password = await bcrypt.hash(password, 10)

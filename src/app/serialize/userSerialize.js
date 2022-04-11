@@ -1,9 +1,10 @@
-const serialize = ({ _id, username, email, password, type, profilePic, contributionPoints, groups }) => ({
+const serialize = ({ _id, username, email, password, type, area, profilePic, contributionPoints, groups }) => ({
     _id, 
     username, 
     email, 
     password, 
-    type, 
+    type,
+    area, 
     profilePic, 
     contributionPoints, 
     groups

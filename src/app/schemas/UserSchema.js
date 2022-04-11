@@ -21,6 +21,9 @@ const UserSchema = Schema({
     enum: ['student', 'teacher'],
     required: true
   },
+  area: {
+    type: String,
+  },
   profilePic: {
     type: String,
     default: 'user.png'

@@ -16,7 +16,7 @@ class GroupRepository extends GenericRepository {
         .populate('posts')
         .limit(limit)
         .skip(offset)*/
-        return GroupSchema.paginate({$or: [{discipline: filter.discipline}, {topics: filter.top}]}, { offset, limit, populate: ['members', 'mods', 'posts']})
+        return GroupSchema.paginate({$or: [{discipline: filter.discipline}, {topics: filter.top}]}, { offset, limit, populate: ['members', 'mods', 'posts', 'author']})
     }
 
     async getById(id) {
@@ -24,6 +24,7 @@ class GroupRepository extends GenericRepository {
         .populate('members')
         .populate('mods')
         .populate('posts')
+        .populate('author')
     }
 
     async getByName(name) {
@@ -31,6 +32,7 @@ class GroupRepository extends GenericRepository {
         .populate('members')
         .populate('mods')
         .populate('posts')
+        .populate('author')
     }
 
     async create(payload, userId) {

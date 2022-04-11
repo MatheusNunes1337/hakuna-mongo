@@ -11,7 +11,12 @@ class GroupRepository extends GenericRepository {
         Number(limit);
         Number(offset);
     
-        return GroupSchema.paginate({$or: [filter]}, { offset, limit, populate: ['members', 'mods', 'posts']})
+        return GroupSchema.find({$or: [filter]}).populate('members')
+        .populate('mods')
+        .populate('posts')
+        .limit(limit)
+        .skip(offset)
+        //return GroupSchema.paginate({$or: [filter]}, { offset, limit, populate: ['members', 'mods', 'posts']})
     }
 
     async getById(id) {

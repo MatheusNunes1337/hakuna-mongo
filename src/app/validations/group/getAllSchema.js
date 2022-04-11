@@ -7,6 +7,7 @@ const getAllGroupsValidation = async (req, res, next) => {
         limit: Joi.number().min(0),
         name: Joi.string().trim().max(25),
         isPublic: Joi.boolean(),
+        discipline: Joi.string().trim(),
         topics: Joi.string().trim(),
         members: Joi.string().trim(),
     });

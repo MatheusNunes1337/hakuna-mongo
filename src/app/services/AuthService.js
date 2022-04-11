@@ -13,7 +13,7 @@ class AuthService {
 
     if (!user) throw new InvalidCredentials('This username does not exist in database');
 
-    if (!(await bcrypt.compare(password, user.password)))
+    if (!await bcrypt.compare(password, user.password))
       throw new InvalidCredentials('The password is incorrect. Try again');
 
     const { _id } = user;

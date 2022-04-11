@@ -16,23 +16,21 @@ class GroupRepository extends GenericRepository {
         .populate('posts')
         .limit(limit)
         .skip(offset)*/
-        return GroupSchema.paginate({$or: [{discipline: filter.discipline}, {topics: filter.top}]}, { offset, limit, populate: ['members', 'mods', 'posts', 'author']})
+        return GroupSchema.paginate({$or: [{discipline: filter.discipline}, {topics: filter.top}]}, { offset, limit, populate: ['members', 'mods', 'posts']})
     }
 
     async getById(id) {
         return GroupSchema.findById(id)
         .populate('members')
         .populate('mods')
-        .populate('posts')
-        .populate('author')
+        .populate({path: 'posts', populate: {path: 'author'}})
     }
 
     async getByName(name) {
         return GroupSchema.findOne({ name })
         .populate('members')
         .populate('mods')
-        .populate('posts')
-        .populate('author')
+        .populate({path: 'posts', populate: {path: 'author'}})
     }
 
     async create(payload, userId) {

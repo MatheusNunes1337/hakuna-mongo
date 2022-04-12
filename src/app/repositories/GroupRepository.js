@@ -23,7 +23,7 @@ class GroupRepository extends GenericRepository {
         return GroupSchema.findById(id)
         .populate('members')
         .populate('mods')
-        .populate({path: 'posts', populate: {path: 'author'}})
+        .populate({path: 'posts', populate: [{path: 'author'}, {path: 'comments'}]})
     }
 
     async getByName(name) {

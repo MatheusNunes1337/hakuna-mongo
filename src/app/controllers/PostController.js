@@ -21,7 +21,7 @@ class PostController {
     }
 
     async update(req, res) {
-        const response = await PostService.update(req.body, req.params, req.files)
+        const response = await PostService.update(req.body, req.userId, req.params, req.files)
         return res.status(200).json(serialize(response))
     }
 

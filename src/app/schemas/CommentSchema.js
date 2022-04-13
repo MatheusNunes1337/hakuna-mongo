@@ -13,14 +13,14 @@ const CommentSchema = Schema({
     type: String,
     required: true
   },
-  likes: {
-    type: Number,
-    default: 0,
-  },
-  deslikes: {
-    type: Number,
-    default: 0,
-  },
+  likes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  }],
+  deslikes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  }],
   author: {
     type: Schema.Types.ObjectId,
     ref: 'User',

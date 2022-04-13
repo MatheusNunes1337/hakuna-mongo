@@ -36,25 +36,25 @@ class PostService {
         return PostRepository.create(payload, groupId)
     }
 
-    async update(payload, {id, groupId}, materials) {
-        const { author, files } = await this.findById(id, groupId)
-        const { likes, deslikes } = payload
+    async update(payload, userId, {id, groupId}, materials) {
+        const { author, files, likes, deslikes } = await this.findById(id, groupId)
+        const {isLiked, isDesliked} = payload
   
-        if(likes) {
-            if(likes === 'enable') {
+        if(isLiked) {
+            if(!likes.includes(userId)) {
                 await increaseContributionPoints(author._id)
-                payload = {$inc : {likes : 1}}
+                payload = {$push : {likes : userId}}
             } else {
                 await decreaseContributionPoints(author._id)
-                payload = {$inc : {likes : -1}}
+                payload = {$pull : {likes : userId}}
             }
-        } else if(deslikes) {
-            if(deslikes === 'enable') {
+        } else if(isDesliked) {
+            if(!deslikes.includes(userId)) {
                 await decreaseContributionPoints(author._id)
-                payload = {$inc : {deslikes : 1}}
+                payload = {$push : {deslikes : userId}}
             } else {
                 await increaseContributionPoints(author._id)
-                payload = {$inc : {deslikes : -1}}
+                payload = {$pull : {deslikes : userId}}
             } 
         }
 

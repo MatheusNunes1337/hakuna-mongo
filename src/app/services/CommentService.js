@@ -32,23 +32,23 @@ class CommentService {
 
     async update(payload, {id, postId}, materials) {
         const { author, files } = await this.findById(postId, id)
-        const { likes, deslikes } = payload
-
-        if(likes) {
-            if(likes === 'enable') {
+        const {isLiked, isDesliked} = payload
+  
+        if(isLiked) {
+            if(!likes.includes(userId)) {
                 await increaseContributionPoints(author._id)
-                payload = {$inc : {likes : 1}}
+                payload = {$push : {likes : userId}, $pull : {deslikes : userId}}
             } else {
                 await decreaseContributionPoints(author._id)
-                payload = {$inc : {likes : -1}}
+                payload = {$pull : {likes : userId}}
             }
-        } else if(deslikes) {
-            if(deslikes === 'enable') {
+        } else if(isDesliked) {
+            if(!deslikes.includes(userId)) {
                 await decreaseContributionPoints(author._id)
-                payload = {$inc : {deslikes : 1}}
+                payload = {$push : {deslikes : userId}, $pull : {likes : userId}}
             } else {
                 await increaseContributionPoints(author._id)
-                payload = {$inc : {deslikes : -1}}
+                payload = {$pull : {deslikes : userId}}
             } 
         }
 

@@ -1,5 +1,7 @@
 const NotFound = require('../errors/NotFound')
 const CommentRepository = require('../repositories/CommentRepository')
+const decreaseContributionPoints = require('../helpers/decreaseContributionPoints')
+const increaseContributionPoints = require('../helpers/increaseContributionPoints')
 const FileRepository = require('../repositories/FileRepository')
 const getCurrentDate = require('../utils/getCurrentDate')
 const getCurrentTime = require('../utils/getCurrentTime')

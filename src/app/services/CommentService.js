@@ -30,7 +30,7 @@ class CommentService {
         return CommentRepository.create(payload, postId)
     }
 
-    async update(payload, {id, postId}, materials) {
+    async update(payload, userId, {id, postId}, materials) {
         const { author, files, likes, deslikes } = await this.findById(postId, id)
         const {isLiked, isDesliked} = payload
   

@@ -31,7 +31,7 @@ class CommentService {
     }
 
     async update(payload, {id, postId}, materials) {
-        const { author, files } = await this.findById(postId, id)
+        const { author, files, likes, deslikes } = await this.findById(postId, id)
         const {isLiked, isDesliked} = payload
   
         if(isLiked) {

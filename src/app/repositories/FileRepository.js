@@ -29,6 +29,7 @@ class FileRepository {
 
     async deleteMany(keys = []) {
         const objects = keys.map(key => ({ Key: key }));
+        if(Object.keys(objects).length == 0) return 
         return await s3.deleteObjects({
             Bucket: BUCKET,
             Delete: { Objects: objects }

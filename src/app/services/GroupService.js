@@ -64,20 +64,22 @@ class GroupService {
 
     async removeModerator(id, userId) {
         const group = await this.findById(id)
-        const modIndex = group.mods.indexOf(userId);
+        const modsId = group.mods.map(mod => mod._id.toString())
+        const modIndex = modsId.indexOf(userId);
 
-        if(modIndex === -1) throw new NotFound('Moderator')
+        if(modIndex == -1) throw new NotFound('Moderator')
 
         return GroupRepository.removeModerator(id, userId)
     }
 
     async removeMember(id, userId) {
         const group = await this.findById(id)
-        const memberIndex = group.members.indexOf(userId);
+        const membersId = group.members.map(member => member._id.toString())
+        const memberIndex = membersId.indexOf(userId);
 
         if(memberIndex === -1) throw new NotFound('Member')
 
-        if(group.members.length === 1) {
+        if(membersId.length === 1) {
             throw new BadRequest('You cannot leave this group because you are the only member left')
         }
 

@@ -67,7 +67,7 @@ class GroupService {
         const modsId = group.mods.map(mod => mod._id.toString())
         const modIndex = modsId.indexOf(userId);
 
-        if(modIndex == -1) throw new NotFound('Moderator')
+        if(modIndex == -1) throw new NotFound('Moderator');
 
         return GroupRepository.removeModerator(id, userId)
     }

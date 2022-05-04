@@ -9,7 +9,11 @@ const MessageSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
-  createdAt: {
+  creationDate: {
+    type: String,
+    required: true
+  },
+  creationTime: {
     type: String,
     required: true
   },

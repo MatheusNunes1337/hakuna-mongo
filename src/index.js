@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const swaggerUI = require('swagger-ui-express');
-const http = require('http') 
-const { Server } = require('socket.io')
+const http = require('http')
+const { Server } = require('socket.io') 
 require('express-async-errors')
 // const swaggerUI = require('swagger-ui-express');
 const routes = require('./routes');
@@ -40,10 +40,25 @@ const app = new App().express
 const server = http.createServer(app)
 
 const io = new Server(server, {
-    cors: {
-      origin: '*',
-      methods: ['GET', 'POST']
-    }
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST']
+  }
+})
+
+io.on('connection', socket => {
+  socket.on('join_chat', data => {
+      console.log(`User with id ${socket.id} joined chat: ${data}`)
+      socket.join(data)
+  })
+
+  socket.on("send_message", (data) => {
+    socket.to(data.chat).emit("receive_message", data);
+  });
+
+  socket.on('disconnect', () => {
+      console.log('User disconnected', socket.id)
+  })
 })
 
 module.exports = server

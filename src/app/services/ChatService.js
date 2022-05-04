@@ -1,6 +1,8 @@
 const NotFound = require('../errors/NotFound')
 const ChatRepository = require('../repositories/ChatRepository')
 const UserRepository = require('../repositories/UserRepository')
+const getCurrentDate = require('../utils/getCurrentDate')
+const getCurrentTime = require('../utils/getCurrentTime')
 
 class ChatService {
     async getByUser(userId) {
@@ -15,6 +17,31 @@ class ChatService {
         if(!chat) throw new NotFound('Chat')
 
         return chat
+    }
+
+    async create(userId, targetId) {
+        const participants = [userId, targetId]
+        return ChatRepository.create(participants)
+    }
+
+    async sendMessage(payload, authorId, chatId) {
+        const chat = await ChatRepository.getById(chatId)
+        if(!chat) throw new NotFound('Chat')
+
+        payload.author = authorId
+        payload.chat = chatId
+        payload.creationDate = getCurrentDate()
+        payload.creationTime = getCurrentTime()
+
+        return ChatRepository.sendMessage(payload)
+    
+    }
+
+    async getMessages(chatId) {
+        const chat = await ChatRepository.getById(chatId)
+        if(!chat) throw new NotFound('Chat')
+
+        return ChatRepository.getMessages(chatId)
     }
 
     async delete(id) {

@@ -11,6 +11,10 @@ class ChatRepository extends GenericRepository {
         return await ChatSchema.find({participants: userId}).populate('messages').populate('participants')
     }
 
+    async getByParticipants(participants) {
+        return await ChatSchema.findOne({participants: {$all: participants}})
+    }
+
     async getById(id) {
         return await ChatSchema.findById(id).populate('messages').populate('participants')
     }

@@ -28,7 +28,7 @@ class ChatController {
     }
 
     async delete(req, res) {
-        await ChatService.delete(req.params)
+        await ChatService.delete(req.params.id)
         return res.status(204).end()
     }
 }

@@ -21,6 +21,9 @@ class ChatService {
 
     async create(userId, targetId) {
         const participants = [userId, targetId]
+        const chat = await ChatRepository.getByParticipants(participants)
+        if(chat) return chat
+
         return ChatRepository.create(participants)
     }
 

@@ -3,7 +3,7 @@ const {serialize, paginateSerialize} = require('../serialize/groupSerialize')
 
 class GroupController {
     async findAll(req, res) {
-        const response = await GroupService.findAll(req.query)
+        const response = await GroupService.findAll(req.query, req.userId)
         return res.status(200).json(paginateSerialize(response))
     }
 

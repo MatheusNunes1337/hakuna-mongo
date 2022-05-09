@@ -6,8 +6,12 @@ const Conflict = require('../errors/Conflict')
 const BadRequest = require('../errors/BadRequest')
 
 class GroupService {
-    findAll({offset, limit, ...filter}) {
+    findAll({offset, limit, ...filter}, userId) {
+        const {members} = filter
         filter = transformFilterToRegex(filter)
+        if(filter.members) {
+            filter.members = [members, userId]
+        }
         return GroupRepository.getAll(filter, offset, limit)
     }
 

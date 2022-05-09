@@ -10,12 +10,13 @@ class GroupRepository extends GenericRepository {
     async getAll(filter, offset = 0, limit = 100) {
         Number(limit);
         Number(offset);
-   
-        /*return GroupSchema.find().or([{discipline: filter.discipline}, {topics: filter.top}]).populate('members')
-        .populate('mods')
-        .populate('posts')
-        .limit(limit)
-        .skip(offset)*/
+        const {members} = filter
+
+        if(members) {
+            console.log(members)
+            return await GroupSchema.paginate({members: {$all: members}}, { offset, limit, populate: ['members', 'mods', 'posts']})
+        }
+
         return GroupSchema.paginate({$or: [{discipline: filter.discipline}, {topics: filter.top}]}, { offset, limit, populate: ['members', 'mods', 'posts']})
     }
 

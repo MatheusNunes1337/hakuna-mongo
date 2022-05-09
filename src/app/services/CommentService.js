@@ -61,7 +61,7 @@ class CommentService {
             const commentFiles = materials.map(file => file.key)
             payload.files = commentFiles
         }
-
+        console.log('payload', payload)
         return CommentRepository.update(id, payload)
     }
 

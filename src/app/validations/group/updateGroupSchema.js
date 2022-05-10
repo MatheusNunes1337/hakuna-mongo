@@ -4,7 +4,7 @@ const updateGroupValidation = async (req, res, next) => {
  
     const schema = Joi.object({
         name: Joi.string().trim().max(25),
-        description: Joi.string().max(100).trim(),
+        description: Joi.string().max(300).trim(),
         discipline: Joi.string().trim(),
         maxMembers: Joi.number().integer().max(500),
         topics: Joi.array().items(Joi.string().trim().required()).min(1).max(5).unique(),

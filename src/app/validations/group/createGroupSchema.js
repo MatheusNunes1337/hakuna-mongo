@@ -4,7 +4,7 @@ const createGroupValidation = async (req, res, next) => {
  
     const schema = Joi.object({
         name: Joi.string().trim().max(25).required(),
-        description: Joi.string().max(100).trim().required(),
+        description: Joi.string().max(300).trim().required(),
         discipline: Joi.string().trim().required(),
         topics: Joi.array().items(Joi.string().trim().required()).min(1).max(5).unique().required(),
         isPublic: Joi.boolean().required(),

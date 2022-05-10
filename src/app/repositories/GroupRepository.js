@@ -13,7 +13,6 @@ class GroupRepository extends GenericRepository {
         const {members} = filter
 
         if(members) {
-            console.log(members)
             return await GroupSchema.paginate({members: {$all: members}}, { offset, limit, populate: ['members', 'mods', 'posts']})
         }
 

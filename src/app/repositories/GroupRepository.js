@@ -17,7 +17,7 @@ class GroupRepository extends GenericRepository {
             return await GroupSchema.paginate({members: {$all: members}}, { offset, limit, populate: ['members', 'mods', 'posts']})
         }
 
-        return GroupSchema.paginate({$or: [{discipline: filter.discipline}, {topics: filter.top}]}, { offset, limit, populate: ['members', 'mods', 'posts']})
+        return GroupSchema.paginate({$or: [{discipline: filter.discipline}, {topics: filter.topics}]}, { offset, limit, populate: ['members', 'mods', 'posts']})
     }
 
     async getById(id) {

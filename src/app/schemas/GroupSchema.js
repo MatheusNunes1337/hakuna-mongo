@@ -27,10 +27,10 @@ const GroupSchema = Schema({
   password: {
     type: String,
   },
-  favorites: {
-    type: Number,
-    default: 0,
-  },
+  favorites: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  }],
   maxMembers: {
     type: Number,
     default: 100

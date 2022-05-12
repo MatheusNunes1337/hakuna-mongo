@@ -24,6 +24,12 @@ class GroupController {
         return res.status(200).json(serialize(response))
     }
 
+    async updateFavorites(req, res) {
+        const { id } = req.params
+        const response = await GroupService.updateFavorites(id, req.userId)
+        return res.status(200).json(serialize(response))
+    }
+
     async join(req, res) {
         const { id } = req.params
         await GroupService.join(id, req.userId, req.body)

@@ -11,7 +11,11 @@ class GroupService {
         filter = transformFilterToRegex(filter)
         if(filter.members) {
             filter.members = [members, userId]
+        } else if (filter.favorites) {
+            filter.favorites = userId
+            console.log('oiiie')
         }
+
         return GroupRepository.getAll(filter, offset, limit)
     }
 
@@ -32,7 +36,7 @@ class GroupService {
         return GroupRepository.create(payload, userId)
     }
 
-    async update(payload, id) {
+    async update(payload, id, userId) {
         const { password, name } = payload
 
         const group = await this.findById(id)
@@ -47,6 +51,12 @@ class GroupService {
         }
 
         return GroupRepository.update(id, payload)
+    }
+
+    async updateFavorites(groupId, userId) {
+        await this.findById(groupId)
+
+        return GroupRepository.updateFavorites(groupId, userId)
     }
 
     async join(groupId, userId, { password }) {

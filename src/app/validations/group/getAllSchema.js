@@ -10,6 +10,7 @@ const getAllGroupsValidation = async (req, res, next) => {
         discipline: Joi.string().trim(),
         topics: Joi.string().trim(),
         members: Joi.string().trim(),
+        favorites: Joi.string().trim()
     });
 
     const { error } = await schema.validate(req.query, { abortEarly: false });

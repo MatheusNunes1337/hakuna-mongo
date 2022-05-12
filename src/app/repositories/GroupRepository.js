@@ -10,10 +10,14 @@ class GroupRepository extends GenericRepository {
     async getAll(filter, offset = 0, limit = 100) {
         Number(limit);
         Number(offset);
-        const {members} = filter
+        const {members, favorites} = filter
 
         if(members) {
             return await GroupSchema.paginate({members: {$all: members}}, { offset, limit, populate: ['members', 'mods', 'posts']})
+        }
+
+        if(favorites) {
+            return await GroupSchema.paginate({favorites}, { offset, limit})
         }
 
         return GroupSchema.paginate({$or: [{discipline: filter.discipline}, {topics: filter.topics}]}, { offset, limit, populate: ['members', 'mods', 'posts']})
@@ -71,6 +75,18 @@ class GroupRepository extends GenericRepository {
     addModerator(groupId, userId) {
         return GroupSchema.findByIdAndUpdate({_id: groupId}, 
             {$push: { mods: userId }})
+    }
+
+    async updateFavorites(groupId, userId) {
+        const {favorites} = await GroupSchema.findById(groupId)
+      
+        if(favorites.includes(userId)) {
+            return await GroupSchema.findByIdAndUpdate({_id: groupId}, 
+                {$pull: { favorites: userId }})
+        } else {
+            return await GroupSchema.findByIdAndUpdate({_id: groupId}, 
+                {$push: { favorites: userId }})
+        }
     }
 
     removeModerator(groupId, userId) {

@@ -22,6 +22,10 @@ const PostSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   }],
+  updated: {
+    type: Boolean,
+    default: false
+  },
   author: {
     type: Schema.Types.ObjectId,
     ref: 'User',

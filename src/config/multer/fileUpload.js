@@ -18,7 +18,7 @@ const fileStorageLocal = multer.diskStorage({
         cb(null, path.resolve(__dirname, '..', '..', 'tmp', 'uploads'))
     }, 
     filename: (req, file, cb) => {
-        cb(null, file.fieldname + '_' + Date.now() 
+        cb(null, 'hakuna' + '_' + Date.now() 
             + path.extname(file.originalname))
     }
 });
@@ -29,7 +29,7 @@ const fileStorageS3 = multerS3({
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: 'public-read',
     key: (req, file, cb) => {
-        cb(null, file.fieldname + '_' + Date.now() 
+        cb(null, 'hakuna' + '_' + Date.now() 
         + path.extname(file.originalname)) 
     }
     

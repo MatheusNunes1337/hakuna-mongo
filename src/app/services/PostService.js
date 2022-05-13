@@ -39,6 +39,8 @@ class PostService {
     async update(payload, userId, {id, groupId}, materials) {
         const { author, files, likes, deslikes } = await this.findById(id, groupId)
         const {isLiked, isDesliked} = payload
+
+        payload.updated = true
   
         if(isLiked) {
             if(!likes.includes(userId)) {

@@ -13,7 +13,6 @@ class GroupService {
             filter.members = [members, userId]
         } else if (filter.favorites) {
             filter.favorites = userId
-            console.log('oiiie')
         }
 
         return GroupRepository.getAll(filter, offset, limit)

@@ -35,6 +35,8 @@ class CommentService {
     async update(payload, userId, {id, postId}, materials) {
         const { author, files, likes, deslikes } = await this.findById(postId, id)
         const {isLiked, isDesliked} = payload
+
+        payload.updated = true
   
         if(isLiked) {
             if(!likes.includes(userId)) {
@@ -61,7 +63,7 @@ class CommentService {
             const commentFiles = materials.map(file => file.key)
             payload.files = commentFiles
         }
-        console.log('payload', payload)
+
         return CommentRepository.update(id, payload)
     }
 

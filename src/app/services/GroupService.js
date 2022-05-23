@@ -4,6 +4,7 @@ const GroupRepository = require('../repositories/GroupRepository')
 const transformFilterToRegex = require('../utils/transformFilterToRegex')
 const Conflict = require('../errors/Conflict')
 const BadRequest = require('../errors/BadRequest')
+const PostService = require('./PostService')
 
 class GroupService {
     findAll({offset, limit, ...filter}, userId) {
@@ -100,7 +101,12 @@ class GroupService {
     }
 
     async delete(id) {
-        await this.findById(id)
+        const {posts} = await this.findById(id)
+
+        await Promise.all(posts.map(async post => {
+            await PostService.delete({id: post, groupId: id})
+        }))
+
         return GroupRepository.delete(id)
     }
 }

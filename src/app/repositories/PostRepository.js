@@ -8,7 +8,7 @@ class PostRepository extends GenericRepository {
         super(PostSchema)
     }
 
-    async getAll(filter, offset = 0, limit = 100) {
+    async getAll(filter, offset = 0, limit = 500) {
         Number(limit);
         Number(offset);
     

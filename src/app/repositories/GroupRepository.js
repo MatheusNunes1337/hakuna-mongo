@@ -8,7 +8,7 @@ class GroupRepository extends GenericRepository {
         super(GroupSchema)
     }
 
-    async getAll(filter, offset = 0, limit = 100) {
+    async getAll(filter, offset = 0, limit = 500) {
         Number(limit);
         Number(offset);
         const {members, favorites} = filter

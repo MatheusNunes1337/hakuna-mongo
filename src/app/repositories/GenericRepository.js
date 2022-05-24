@@ -3,7 +3,7 @@ class GenericRepository {
         this.schema = schema
     }
 
-    async getAll(filter, offset = 0, limit = 100) {
+    async getAll(filter, offset = 0, limit = 500) {
         Number(limit);
         Number(offset);
     

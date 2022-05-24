@@ -38,12 +38,6 @@ const UserSchema = Schema({
   }]
 });
 
-UserSchema.pre('save', async function encryptPass(next) {
-  const encriptedPassword = await bcrypt.hash(this.password, 10);
-  this.password = encriptedPassword;
-  next();
-});
-
 UserSchema.plugin(mongoosePaginate);
 
 const User = model('User', UserSchema);

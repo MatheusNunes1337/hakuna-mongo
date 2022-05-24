@@ -24,10 +24,12 @@ class UserService {
     }
 
     async create(payload) {
-        const {username, email} = payload
+        const {username, email, password} = payload
 
         await checkDuplicatedUser({username})
         await checkDuplicatedUser({email})
+
+        payload.password = await bcrypt.hash(password, 10);
 
         return UserRepository.create(payload)
     }

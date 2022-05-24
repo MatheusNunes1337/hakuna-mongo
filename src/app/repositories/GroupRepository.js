@@ -67,10 +67,9 @@ class GroupRepository extends GenericRepository {
         await GroupSchema.findByIdAndUpdate({_id: groupId}, 
             {$push: { members: userId }})
 
-        const user = await UserSchema.findById(userId)
-        user.groups.push(groupId)
+        return await UserSchema.findByIdAndUpdate({_id: userId}, 
+             {$push: { groups: groupId }})
 
-        return user.save()
     }
 
     addModerator(groupId, userId) {
@@ -99,10 +98,8 @@ class GroupRepository extends GenericRepository {
         await GroupSchema.findByIdAndUpdate({_id: groupId}, 
             {$pull: { mods: userId, members: userId }})
         
-        const user = await UserSchema.findById(userId)
-        user.groups.pull(groupId)
-
-        return user.save()
+        return await UserSchema.findByIdAndUpdate({_id: userId}, 
+            {$pull: { groups: groupId }})
     }
     
 }

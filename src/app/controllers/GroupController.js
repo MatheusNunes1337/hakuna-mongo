@@ -36,6 +36,13 @@ class GroupController {
         return res.status(204).end()
     }
 
+    async quit(req, res) {
+        console.log('oi')
+        const { id } = req.params
+        await GroupService.quit(id, req.userId)
+        return res.status(204).end()
+    }
+
     async addModerator(req, res) {
         const {id, userId} = req.params
         await GroupService.addModerator(id, userId)

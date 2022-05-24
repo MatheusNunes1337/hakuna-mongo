@@ -10,7 +10,6 @@ class AuthService {
   async login(credentials) {
     const { password } = credentials;
     const user = await UserRepository.getByUsername(credentials.username);
-
     if (!user) throw new InvalidCredentials('This username does not exist in database');
 
     if (!await bcrypt.compare(password, user.password))

@@ -16,7 +16,7 @@ class GroupService {
             filter.favorites = userId
         }
 
-        return GroupRepository.getAll(filter, offset, limit)
+        return GroupRepository.getAll(filter, userId, offset, limit)
     }
 
     async findById(id) {

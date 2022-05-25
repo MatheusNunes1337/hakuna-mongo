@@ -8,7 +8,7 @@ class GroupRepository extends GenericRepository {
         super(GroupSchema)
     }
 
-    async getAll(filter, offset = 0, limit = 500) {
+    async getAll(filter, userId, offset = 0, limit = 500) {
         Number(limit);
         Number(offset);
         const {members, favorites} = filter
@@ -21,7 +21,7 @@ class GroupRepository extends GenericRepository {
             return await GroupSchema.paginate({favorites}, { offset, limit})
         }
 
-        return GroupSchema.paginate({$or: [{discipline: filter.discipline}, {topics: filter.topics}]}, { offset, limit, populate: ['members', 'mods', 'posts']})
+        return GroupSchema.paginate({$or: [{discipline: filter.discipline}, {topics: filter.topics}], "members" : {"$ne": userId }}, { offset, limit, populate: ['members', 'mods', 'posts']})
     }
 
     async getById(id) {

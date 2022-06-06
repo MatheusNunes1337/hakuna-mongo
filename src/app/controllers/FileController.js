@@ -7,8 +7,8 @@ class FileController {
     }
 
     async download(req, res) {
-        const file = await FileService.download(req.params)
-        return res.status(200).send(file)
+        const fileUrl = await FileService.download(req.params)
+        return res.status(200).send(fileUrl)
     }
 }
 

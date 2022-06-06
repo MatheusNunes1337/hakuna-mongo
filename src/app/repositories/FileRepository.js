@@ -38,6 +38,17 @@ class FileRepository {
     }
 
     async download(key) {
+        const fileUrl = await s3.getSignedUrl('getObject', {
+            Bucket: BUCKET,
+            Key: key,
+            Expires: 60 * 60
+        })
+
+        return fileUrl
+    }
+
+    /*
+        async download(key) {
         const file = await s3.getObject({
             Bucket: BUCKET,
             Key: key
@@ -46,6 +57,8 @@ class FileRepository {
 
         return file.Body
     }
+
+    */
 }
 
 module.exports = new FileRepository()

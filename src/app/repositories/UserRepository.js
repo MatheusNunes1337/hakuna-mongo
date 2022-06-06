@@ -18,7 +18,7 @@ class UserRepository extends GenericRepository {
     }
 
     async getRanking() {
-        return UserSchema.find().sort({ contributionPoints: -1 }).limit(5);
+        return UserSchema.find().sort({ contributionPoints: -1 }).limit(3);
     }
 
     async getByUsername(username) {

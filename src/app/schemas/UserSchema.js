@@ -35,7 +35,11 @@ const UserSchema = Schema({
   groups: [{
     type: Schema.Types.ObjectId,
     ref: 'Group',
-  }]
+  }],
+  helpRequests: [{
+    type: Schema.Types.ObjectId,
+    ref: 'HelpRequest',
+  }],
 });
 
 UserSchema.plugin(mongoosePaginate);

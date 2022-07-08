@@ -1,7 +1,8 @@
 const GenericRepository = require("./GenericRepository");
 const GroupSchema = require('../schemas/GroupSchema')
 const UserSchema = require('../schemas/UserSchema')
-const PostSchema = require('../schemas/PostSchema')
+const PostSchema = require('../schemas/PostSchema');
+const HelpRequestSchema = require("../schemas/HelpRequestSchema");
 
 class GroupRepository extends GenericRepository {
     constructor() {
@@ -59,6 +60,11 @@ class GroupRepository extends GenericRepository {
                 {$pull: {groups: id}}
             )
         }))
+
+        await UserSchema.updateMany({'helpRequests.group': id}, 
+        {$pull: {helpRequests: id}})
+
+        await HelpRequestSchema.deleteMany({group: id})
 
         return GroupSchema.findByIdAndDelete(id)
     }

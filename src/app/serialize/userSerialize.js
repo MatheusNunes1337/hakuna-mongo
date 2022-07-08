@@ -1,4 +1,4 @@
-const serialize = ({ _id, username, email, password, type, area, profilePic, contributionPoints, groups }) => ({
+const serialize = ({ _id, username, email, password, type, area, profilePic, contributionPoints, groups, helpRequests }) => ({
     _id, 
     username, 
     email, 
@@ -7,7 +7,8 @@ const serialize = ({ _id, username, email, password, type, area, profilePic, con
     area, 
     profilePic, 
     contributionPoints, 
-    groups
+    groups,
+    helpRequests
   });
   
   const paginateSerialize = ({ docs, limit, totalDocs, pagingCounter, totalPages }) => ({

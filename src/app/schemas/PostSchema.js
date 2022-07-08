@@ -37,6 +37,10 @@ const PostSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: 'Comment',
   }],
+  isHelpRequired: {
+    type: Boolean,
+    default: false
+  },
   group: {
     type: Schema.Types.ObjectId,
     ref: 'Group',

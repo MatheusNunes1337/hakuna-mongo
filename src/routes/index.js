@@ -10,6 +10,7 @@ const fileRouter = require('./file.router')
 const authentication = require('../app/middlewares/authenticationMiddleware');
 const rankingRouter = require("./ranking.router");
 const chatRouter = require("./chat.router");
+const helpRequestRouter = require("./helpRequest.router");
 
 const routes = express.Router({mergeParams: true})
 
@@ -20,6 +21,7 @@ routes.use('/api/v1/recover', recoverRouter)
 routes.use(authentication)
 routes.use('/api/v1/groups', groupRouter)
 routes.use('/api/v1/chats', chatRouter)
+routes.use('/api/v1/help-requests', helpRequestRouter)
 routes.use('/api/v1/groups/:groupId/posts', postRouter)
 routes.use('/api/v1/groups/:groupId/posts/:postId/comments/', commentRouter)
 routes.use('/api/v1/ranking', rankingRouter)

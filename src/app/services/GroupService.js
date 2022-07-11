@@ -62,9 +62,13 @@ class GroupService {
     async join(groupId, userId, { password }) {
         const group = await this.findById(groupId)
 
+        if(group.members.length == group.maxMembers) {
+            throw new BadRequest('Parece que esse grupo já atingiu a capacidade máxima de membros')
+        }
+
         if(password) {
             const isPasswordValid = await bcrypt.compare(password, group.password)
-            if(!isPasswordValid) throw new BadRequest('The password is incorrect')
+            if(!isPasswordValid) throw new BadRequest('A senha está incorreta. Tente novamente.')
         }
 
         return GroupRepository.join(groupId, userId)
@@ -74,7 +78,7 @@ class GroupService {
         const group = await this.findById(groupId)
 
         if(group.members.length === 1) {
-            throw new BadRequest('You cannot leave this group because you are the only member left')
+            throw new BadRequest('Você não pode deixar esse grupo, pois você é o único membro que restou.')
         }
 
         return GroupRepository.removeMember(groupId, userId)
@@ -91,7 +95,7 @@ class GroupService {
         const modsId = group.mods.map(mod => mod._id.toString())
         const modIndex = modsId.indexOf(userId);
 
-        if(modIndex == -1) throw new NotFound('Moderator');
+        if(modIndex == -1) throw new NotFound('Moderador');
 
         return GroupRepository.removeModerator(id, userId)
     }
@@ -101,7 +105,7 @@ class GroupService {
         const membersId = group.members.map(member => member._id.toString())
         const memberIndex = membersId.indexOf(userId);
 
-        if(memberIndex === -1) throw new NotFound('Member')
+        if(memberIndex === -1) throw new NotFound('Membro')
 
         return GroupRepository.removeMember(id, userId)
     }

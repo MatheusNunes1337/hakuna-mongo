@@ -37,7 +37,6 @@ class GroupController {
     }
 
     async quit(req, res) {
-        console.log('oi')
         const { id } = req.params
         await GroupService.quit(id, req.userId)
         return res.status(204).end()

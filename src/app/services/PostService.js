@@ -46,18 +46,18 @@ class PostService {
   
         if(isLiked) {
             if(!likes.includes(userId)) {
-                await increaseContributionPoints(author._id)
+                await increaseContributionPoints(author._id, 50)
                 payload = {$push : {likes : userId}, $pull : {deslikes : userId}}
             } else {
-                await decreaseContributionPoints(author._id)
+                await decreaseContributionPoints(author._id, 50)
                 payload = {$pull : {likes : userId}}
             }
         } else if(isDesliked) {
             if(!deslikes.includes(userId)) {
-                await decreaseContributionPoints(author._id)
+                await decreaseContributionPoints(author._id, 50)
                 payload = {$push : {deslikes : userId}, $pull : {likes : userId}}
             } else {
-                await increaseContributionPoints(author._id)
+                await increaseContributionPoints(author._id, 50)
                 payload = {$pull : {deslikes : userId}}
             } 
         }

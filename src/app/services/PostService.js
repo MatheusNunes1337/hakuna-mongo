@@ -38,10 +38,15 @@ class PostService {
 
     async update(payload, userId, {id, groupId}, materials) {
         const { author, files, likes, deslikes } = await this.findById(id, groupId)
-        const {isLiked, isDesliked, content} = payload
+        const {isLiked, isDesliked, content, resolvedBy} = payload
 
         if(content) {
             payload.updated = true
+        }
+
+        if(resolvedBy) {
+            const {author} = payload
+            await increaseContributionPoints(author, 250)
         }
   
         if(isLiked) {

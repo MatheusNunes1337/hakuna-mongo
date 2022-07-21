@@ -47,6 +47,7 @@ class PostService {
         if(resolvedBy) {
             const {author} = payload
             await increaseContributionPoints(author, 250)
+            delete payload.author
         }
   
         if(isLiked) {

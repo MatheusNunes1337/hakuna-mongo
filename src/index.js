@@ -41,7 +41,7 @@ const server = http.createServer(app)
 
 const io = new Server(server, {
   cors: {
-    origin: 'https://hakunaaa.herokuapp.com/',
+    origin: 'https://hakunaaa.herokuapp.com',
     methods: ['GET', 'POST']
   }
 })

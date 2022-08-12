@@ -15,6 +15,10 @@ class helpRequestService {
         return HelpRequestRepository.create(payload)
     }
 
+    async cancel(id) {
+        return HelpRequestRepository.cancel(id)
+    }
+
     async decline(id, userId) {
         //const helpRequest = await HelpRequestRepository.getById(id)
         //if(!helpRequest) throw new NotFound('Help Request')

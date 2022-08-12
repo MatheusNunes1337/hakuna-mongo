@@ -33,7 +33,12 @@ class HelpRequestRepository extends GenericRepository {
             {$push: { helpRequests: postId }})
     }
 
-    decline(_id, userId) {
+    async cancel(_id) {
+        return UserSchema.updateMany({helpRequests: _id}, 
+            {$pull: { helpRequests: _id }})
+    }
+
+    async decline(_id, userId) {
         return UserSchema.findByIdAndUpdate(userId, 
             {$pull: { helpRequests: _id }})
     }

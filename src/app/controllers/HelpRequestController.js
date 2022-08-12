@@ -14,6 +14,12 @@ class HelpRequestController {
         return res.status(201).json(response)
     }
 
+    async cancel(req, res) {
+        const {id} = req.params
+        const response = await HelpRequestService.cancel(id)
+        return res.status(200).json(response)
+    }
+
     async decline(req, res) {
         const {id} = req.params
         await HelpRequestService.decline(id, req.userId)

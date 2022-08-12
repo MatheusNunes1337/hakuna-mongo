@@ -1,6 +1,9 @@
 const GenericRepository = require("./GenericRepository");
 const UserSchema = require('../schemas/UserSchema')
 const GroupSchema = require('../schemas/GroupSchema')
+const PostSchema = require('../schemas/PostSchema')
+const CommentSchema = require('../schemas/CommentSchema');
+const { post } = require("../../routes");
 
 class UserRepository extends GenericRepository {
     constructor() {
@@ -40,10 +43,14 @@ class UserRepository extends GenericRepository {
         const { groups } = await UserSchema.findById(id)
 
         await Promise.all(groups.map(async group => {
+            const {posts} = PostSchema.find({group: group, author: id})
             await GroupSchema.findByIdAndUpdate({_id: group}, 
-                {$pull: { members: id, mods: id }}
+                {$pull: { members: id, mods: id, posts: posts}}
             )
         }))
+
+        await PostSchema.deleteMany({author: id})
+        await CommentSchema.deleteMany({author: id})
 
         return UserSchema.findByIdAndDelete(id)
     }

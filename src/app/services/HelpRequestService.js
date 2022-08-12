@@ -12,16 +12,12 @@ class helpRequestService {
     }
 
     async create(payload) {
-        payload.creationDate = getCurrentDate()
-        payload.creationTime = getCurrentTime()
-
         return HelpRequestRepository.create(payload)
     }
 
     async decline(id, userId) {
-        const helpRequest = await HelpRequestRepository.getById(id)
-        if(!helpRequest) throw new NotFound('Help Request')
-
+        //const helpRequest = await HelpRequestRepository.getById(id)
+        //if(!helpRequest) throw new NotFound('Help Request')
         return HelpRequestRepository.decline(id, userId)
     }
 }

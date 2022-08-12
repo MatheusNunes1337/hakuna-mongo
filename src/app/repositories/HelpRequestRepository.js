@@ -1,10 +1,11 @@
 const GenericRepository = require("./GenericRepository");
-const HelpRequestSchema = require('../schemas/HelpRequestSchema')
+//const HelpRequestSchema = require('../schemas/HelpRequestSchema')
 const UserSchema = require('../schemas/UserSchema')
+const PostSchema = require('../schemas/PostSchema')
 
 class HelpRequestRepository extends GenericRepository {
     constructor() {
-        super(HelpRequestSchema)
+        super()
     }
 
     /*
@@ -17,20 +18,19 @@ class HelpRequestRepository extends GenericRepository {
     }
     */
 
+    /*
     getById(_id) {
         return HelpRequestSchema.findOne({_id})
-        .populate('group')
-    }
+        .populate([{path: 'post', populate: {path: 'group'}}])
+    }*/
+
 
     async create(payload) {
-        let helpRequest = await HelpRequestSchema.create(payload)
+        const { postId } = payload
+        const { group } = await PostSchema.findById(postId).populate('group')
 
-        const {_id, group} = await this.getById(helpRequest._id)
-
-        await UserSchema.updateMany({groups : {"$ne": group._id }, area: group.discipline}, 
-            {$push: { helpRequests: _id }})
-
-        return helpRequest
+        return await UserSchema.updateMany({groups : {"$ne": group._id }, area: group.discipline}, 
+            {$push: { helpRequests: postId }})
     }
 
     decline(_id, userId) {

@@ -38,7 +38,7 @@ const UserSchema = Schema({
   }],
   helpRequests: [{
     type: Schema.Types.ObjectId,
-    ref: 'HelpRequest',
+    ref: 'Post',
   }],
 });
 

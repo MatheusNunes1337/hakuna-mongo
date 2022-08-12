@@ -8,10 +8,10 @@ const getAllCommentsValidation = require('../app/validations/comment/getAllSchem
 const { fileUpload } = require('../config/multer/fileUpload')
 
 commentRouter.use(objectIdValidation)
+commentRouter.post('/', fileUpload.array('files', 3), CommentController.create)
 commentRouter.use(memberMiddleware)
 commentRouter.get('/', getAllCommentsValidation, CommentController.findAll)
 commentRouter.get('/:id', CommentController.findById)
-commentRouter.post('/', fileUpload.array('files', 3), CommentController.create)
 commentRouter.patch('/:id', fileUpload.array('files', 3), CommentController.update)
 commentRouter.delete('/:id', CommentController.delete)
 

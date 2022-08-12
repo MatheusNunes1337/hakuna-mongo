@@ -14,7 +14,7 @@ class UserRepository extends GenericRepository {
     }
 
     async getById(id) {
-        return UserSchema.findById(id).populate('groups').populate({path: 'helpRequests', populate: {path: 'group'}});
+        return UserSchema.findById(id).populate('groups').populate({path: 'helpRequests', populate: [{path: 'group'}, {path: 'author'}]});
     }
 
     async getRanking() {

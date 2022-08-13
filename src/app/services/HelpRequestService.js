@@ -11,6 +11,10 @@ class helpRequestService {
         return helpRequest
     }
 
+    async getAllResolved(userId) {
+        return HelpRequestRepository.getAllResolved(userId)
+    }
+
     async create(payload) {
         return HelpRequestRepository.create(payload)
     }

@@ -9,6 +9,11 @@ class HelpRequestController {
         return res.status(200).json(response)
     }
 
+    async getAllResolved(req, res) {
+        const response = await HelpRequestService.getAllResolved(req.userId)
+        return res.status(200).json(response)
+    }
+
     async create(req, res) {
         const response = await HelpRequestService.create(req.body)
         return res.status(201).json(response)

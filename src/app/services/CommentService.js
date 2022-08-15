@@ -5,6 +5,7 @@ const increaseContributionPoints = require('../helpers/increaseContributionPoint
 const FileRepository = require('../repositories/FileRepository')
 const getCurrentDate = require('../utils/getCurrentDate')
 const getCurrentTime = require('../utils/getCurrentTime')
+const BadRequest = require('../errors/BadRequest')
 
 class CommentService {
     getAll(postId) {
@@ -61,7 +62,7 @@ class CommentService {
                 throw new BadRequest('A comment cannot have more than 3 files')
 
             const commentFiles = materials.map(file => file.key)
-            payload.files = commentFiles
+            payload.files = files.concat(commentFiles)
         }
 
         return CommentRepository.update(id, payload)

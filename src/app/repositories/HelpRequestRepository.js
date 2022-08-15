@@ -38,8 +38,7 @@ class HelpRequestRepository extends GenericRepository {
         const { group, comments } = await PostSchema.findById(postId).populate('group')
         .populate({path: 'comments', populate: {path: 'author'}})
         const commentAuthors = comments.map(comment => comment.author._id)
-        console.log('comment authors', commentAuthors)
-
+  
         return await UserSchema.updateMany({groups : {"$ne": group._id }, area: group.discipline, _id: { $nin: commentAuthors }}, 
             {$push: { helpRequests: postId }})
     }

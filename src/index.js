@@ -48,7 +48,6 @@ const io = new Server(server, {
 
 io.on('connection', socket => {
   socket.on('join_chat', data => {
-      console.log(`User with id ${socket.id} joined chat: ${data}`)
       socket.join(data)
   })
 

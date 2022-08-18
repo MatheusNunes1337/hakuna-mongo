@@ -28,6 +28,20 @@ class PostRepository extends GenericRepository {
         return post
     }
 
+    async update(id, payload) {
+        const {isHelpRequired} = payload
+        const updatedPost = await this.schema.findByIdAndUpdate(id, payload, { new: true });
+        if(isHelpRequired == true) {
+            const post = await PostSchema.findById(id)
+            const comment = await CommentSchema.create({creationDate: payload.creationDate, 
+                creationTime: payload.creationTime, post: id, author: ''});
+            post.comments.push(comment._id)
+            return await post.save()
+        }
+
+        return updatedPost
+    }
+
     async delete(_id, group) {
         await GroupSchema.findByIdAndUpdate(group, {$pull: {posts: _id}})
         await CommentSchema.deleteMany({post: _id})

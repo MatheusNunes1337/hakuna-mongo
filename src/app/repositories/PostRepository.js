@@ -29,12 +29,11 @@ class PostRepository extends GenericRepository {
     }
 
     async update(id, payload) {
-        const {isHelpRequired} = payload
         const updatedPost = await this.schema.findByIdAndUpdate(id, payload, { new: true });
-        if(isHelpRequired) {
+        if(updatedPost.isHelpRequired == true) {
             const post = await PostSchema.findById(id)
-            const comment = await CommentSchema.create({content: 'comentário teste!!!', creationDate: payload.creationDate, 
-                creationTime: payload.creationTime, post: id, author: '62fd2192fff63e87325b5bc4'});
+            const comment = await CommentSchema.create({content: 'comentário teste!!!', creationDate: updatedPost.creationDate, 
+                creationTime: updatedPost.creationTime, post: id, author: '62fd2192fff63e87325b5bc4'});
             post.comments.push(comment._id)
             return await post.save()
         }

@@ -53,14 +53,6 @@ const GroupSchema = Schema({
   }],
 });
 
-GroupSchema.pre('save', async function encryptPass(next) {
-    if(this.password) {
-      const encriptedPassword = await bcrypt.hash(this.password, 10);
-      this.password = encriptedPassword;
-    }
-    next();
-});
-
 GroupSchema.plugin(mongoosePaginate);
 
 const Group = model('Group', GroupSchema);

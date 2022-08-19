@@ -28,10 +28,14 @@ class GroupService {
     }
 
     async create(payload, userId) {
-        const { name } = payload
+        const { name, password } = payload
         const group = await GroupRepository.getByName(name)
 
         if(group) throw new Conflict('This group name is already in use')
+
+        if(password) {
+            payload.password = await bcrypt.hash(password, 10)
+        }
 
         return GroupRepository.create(payload, userId)
     }
@@ -65,6 +69,7 @@ class GroupService {
         if(group.members.length == group.maxMembers) {
             throw new BadRequest('Parece que esse grupo já atingiu a capacidade máxima de membros')
         }
+        console.log('group pass', group.password)
 
         if(password) {
             const isPasswordValid = await bcrypt.compare(password, group.password)

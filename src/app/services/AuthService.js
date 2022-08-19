@@ -10,10 +10,10 @@ class AuthService {
   async login(credentials) {
     const { password } = credentials;
     const user = await UserRepository.getByUsername(credentials.username);
-    if (!user) throw new InvalidCredentials('This username does not exist in database');
+    if (!user) throw new InvalidCredentials('Esse nome de usuário não existe na base de dados');
 
     if (!await bcrypt.compare(password, user.password))
-      throw new InvalidCredentials('The password is incorrect. Try again');
+      throw new InvalidCredentials('A senha está incorreta. Tente novamente');
 
     const { _id } = user;
     const token = jwt.sign({  _id: _id.toString() }, process.env.API_SECRET, {

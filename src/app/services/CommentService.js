@@ -14,7 +14,7 @@ class CommentService {
 
     async findById(postId, id) {
         const comment = await CommentRepository.getById(id, postId)
-        if(!comment) throw new NotFound('Comment')
+        if(!comment) throw new NotFound('Comentário')
         
         return comment
     }
@@ -59,7 +59,7 @@ class CommentService {
 
         if(materials) {
             if(materials.length + files.length > 3) 
-                throw new BadRequest('A comment cannot have more than 3 files')
+                throw new BadRequest('Um comentário deve conter no máximo três materiais')
 
             const commentFiles = materials.map(file => file.key)
             payload.files = files.concat(commentFiles)

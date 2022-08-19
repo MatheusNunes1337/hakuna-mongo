@@ -22,7 +22,7 @@ class GroupService {
     async findById(id) {
         const group = await GroupRepository.getById(id)
     
-        if(!group) throw new NotFound('Group')
+        if(!group) throw new NotFound('Grupo')
 
         return group
     }
@@ -31,7 +31,7 @@ class GroupService {
         const { name, password } = payload
         const group = await GroupRepository.getByName(name)
 
-        if(group) throw new Conflict('This group name is already in use')
+        if(group) throw new Conflict('Já existe um grupo com esse nome. Tente outro')
 
         if(password) {
             payload.password = await bcrypt.hash(password, 10)
@@ -51,7 +51,7 @@ class GroupService {
 
         if(name && group.name !== name) {
             const group = await GroupRepository.getByName(name)
-            if(group) throw new Conflict('This group name is already in use')
+            if(group) throw new Conflict('Já existe um grupo com esse nome. Tente outro')
         }
 
         return GroupRepository.update(id, payload)
@@ -69,11 +69,10 @@ class GroupService {
         if(group.members.length == group.maxMembers) {
             throw new BadRequest('Parece que esse grupo já atingiu a capacidade máxima de membros')
         }
-        console.log('group pass', group.password)
 
-        if(password) {
+        if(!group.isPublic) {
             const isPasswordValid = await bcrypt.compare(password, group.password)
-            if(!isPasswordValid) throw new BadRequest('A senha está incorreta. Tente novamente.')
+            if(!isPasswordValid) throw new BadRequest('A senha está incorreta. Tente novamente')
         }
 
         return GroupRepository.join(groupId, userId)
@@ -83,7 +82,7 @@ class GroupService {
         const group = await this.findById(groupId)
 
         if(group.members.length === 1) {
-            throw new BadRequest('Você não pode deixar esse grupo, pois você é o único membro que restou.')
+            throw new BadRequest('Você não pode deixar esse grupo, pois você é o único membro que restou')
         }
 
         return GroupRepository.removeMember(groupId, userId)

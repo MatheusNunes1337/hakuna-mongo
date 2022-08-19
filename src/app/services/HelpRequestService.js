@@ -6,7 +6,7 @@ const getCurrentTime = require('../utils/getCurrentTime')
 class helpRequestService {
     async getById(id) {
         const helpRequest = await HelpRequestRepository.getById(id)
-        if(!helpRequest) throw new NotFound('Help Request')
+        if(!helpRequest) throw new NotFound('Solicitação de ajuda')
 
         return helpRequest
     }

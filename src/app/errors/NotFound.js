@@ -1,6 +1,6 @@
 class NotFound extends Error {
     constructor(name) {
-      super(`${name} not found`);
+      super(`${name} não encontrado`);
       this.name = 'Not Found';
     }
   }

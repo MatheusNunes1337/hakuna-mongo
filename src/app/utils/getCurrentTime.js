@@ -1,5 +1,5 @@
-const moment = require('moment')
+const moment = require('moment-timezone')
 
-const getCurrentTime = () => moment().format('HH:mm')
+const getCurrentTime = () => moment().tz('America/Sao_Paulo').format('HH:mm')
 
 module.exports = getCurrentTime

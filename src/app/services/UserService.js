@@ -14,7 +14,7 @@ class UserService {
     async findById({ id }) {
         const user = await UserRepository.getById(id)
 
-        if(!user) throw new NotFound('User')
+        if(!user) throw new NotFound('Usuário')
 
         return user
     }

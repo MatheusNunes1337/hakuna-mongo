@@ -5,7 +5,7 @@ const checkDuplicatedUser = async (field) => {
     const fieldname = Object.keys(field)
     const user = await UserRepository.getAll(field)
 
-    if(user.docs.length > 0) throw new Conflict(`This ${fieldname} is already in use`)
+    if(user.docs.length > 0) throw new Conflict(`Esse ${fieldname} já está sendo usado`)
 }
 
 module.exports = checkDuplicatedUser

@@ -7,14 +7,14 @@ const getCurrentTime = require('../utils/getCurrentTime')
 class ChatService {
     async getByUser(userId) {
         const user = UserRepository.getById(userId)
-        if(!user) throw new NotFound('User')
+        if(!user) throw new NotFound('Usuário')
 
         return ChatRepository.getByUser(userId)
     }
 
     async getById(id) {
         const chat = await ChatRepository.getById(id)
-        if(!chat) throw new NotFound('Chat')
+        if(!chat) throw new NotFound('Conversa')
 
         return chat
     }
@@ -29,7 +29,7 @@ class ChatService {
 
     async sendMessage(payload, authorId, chatId) {
         const chat = await ChatRepository.getById(chatId)
-        if(!chat) throw new NotFound('Chat')
+        if(!chat) throw new NotFound('Conversa')
 
         payload.author = authorId
         payload.chat = chatId
@@ -42,14 +42,14 @@ class ChatService {
 
     async getMessages(chatId) {
         const chat = await ChatRepository.getById(chatId)
-        if(!chat) throw new NotFound('Chat')
+        if(!chat) throw new NotFound('Conversa')
 
         return ChatRepository.getMessages(chatId)
     }
 
     async delete(id) {
         const chat = await ChatRepository.getById(id)
-        if(!chat) throw new NotFound('Chat')
+        if(!chat) throw new NotFound('Conversa')
 
         return ChatRepository.delete(id)
     }

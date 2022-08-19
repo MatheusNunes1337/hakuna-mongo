@@ -70,7 +70,7 @@ class PostService {
 
         if(materials) {
             if(materials.length + files.length > 3) 
-                throw new BadRequest('A post cannot have more than 3 files')
+                throw new BadRequest('Uma postagem deve conter no máximo três materiais')
 
             const postFiles = materials.map(file => file.key)
             payload.files = files.concat(postFiles)

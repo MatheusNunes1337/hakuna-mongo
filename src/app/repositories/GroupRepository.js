@@ -18,7 +18,7 @@ class GroupRepository extends GenericRepository {
         }
 
         if(favorites) {
-            return await GroupSchema.paginate({favorites}, { offset, limit})
+            return await GroupSchema.paginate({favorites, members: favorites}, { offset, limit})
         }
 
         return GroupSchema.paginate({$or: [{discipline: filter.discipline}, {topics: filter.topics}], "members" : {"$ne": userId }}, { offset, limit, populate: ['members', 'mods', 'posts']})

@@ -37,7 +37,7 @@ class UserService {
     async update(id, payload, file) {
         const user = await this.findById({ id })
 
-        const {username, email } = payload
+        const {username, email, area } = payload
         let { password } = payload
 
         if(username && username !== user.username) {
@@ -51,6 +51,10 @@ class UserService {
         if(password) {
             password = await bcrypt.hash(password, 10)
             payload = {...payload, password}
+        }
+
+        if(area !== user.area) {
+            payload.helpRequests = []
         }
 
         if(file) {

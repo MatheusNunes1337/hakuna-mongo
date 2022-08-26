@@ -28,6 +28,7 @@ class PostRepository extends GenericRepository {
         return post
     }
 
+    /*
     async update(id, payload) {
         const updatedPost = await this.schema.findByIdAndUpdate(id, payload, { new: true });
         if(updatedPost.isHelpRequired == true) {
@@ -40,6 +41,7 @@ class PostRepository extends GenericRepository {
 
         return updatedPost
     }
+    */
 
     async delete(_id, group) {
         await GroupSchema.findByIdAndUpdate(group, {$pull: {posts: _id}})

@@ -80,9 +80,14 @@ class GroupService {
 
     async quit(groupId, userId) {
         const group = await this.findById(groupId)
+        const mods = group.mods.map(mod => mod._id.toString())
+
+        if(mods.includes(userId) && mods.length === 1) {
+            throw new BadRequest('Você não pode deixar esse grupo, pois você é o único moderador. Considere atribuir privilégios de moderador a outro membro ou deletar esse grupo')
+        }
 
         if(group.members.length === 1) {
-            throw new BadRequest('Você não pode deixar esse grupo, pois você é o único membro que restou')
+            throw new BadRequest('Você não pode deixar esse grupo, pois você é o único membro que restou. Caso você seja moderador, considere deletar esse grupo')
         }
 
         return GroupRepository.removeMember(groupId, userId)
